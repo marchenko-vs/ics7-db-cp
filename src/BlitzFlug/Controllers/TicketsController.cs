@@ -67,7 +67,16 @@ namespace BlitzFlug.Controllers
         [Authorize(Roles = "moderator, admin")]
         public IActionResult InsertTicket(Ticket ticket)
         {
-            ticket.InsertTicket();
+            try
+            {
+                ticket.InsertTicket();
+            }
+            catch (Exception) 
+            {
+                ViewData["Error"] = "Указаны некорректные данные";
+
+                return View();
+            }
 
             return RedirectToAction("HandleTickets");
         }

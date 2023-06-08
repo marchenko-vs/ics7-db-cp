@@ -21,7 +21,7 @@
                 <button type="submit" class="btn btn-primary" style="width: 200px; margin-top: 25px">Оплатить</button>
             </form>
             <form method="post" asp-controller="Orders" asp-action="ClearOrder">
-                <button type="submit" class="btn btn-primary" style="width: 200px; margin-top: 25px">Очистить корзину</button>
+                <button type="submit" class="btn btn-primary" style="width: 200px; margin-top: 10px">Очистить корзину</button>
             </form>
         </div>
         <div class="text-center" style="margin-top: 25px">
@@ -33,11 +33,9 @@
                 <div class="card text-left" style="margin-top: 20px">
                     <div class="card-body">
                         <h3 class="card-title">Пункт вылета: @Model[i].DeparturePoint</h3>
-                        <h3 class="card-title">Дата вылета: @Model[i].DepartureDateTime.ToShortDateString()</h3>
-                        <h3 class="card-title">Время вылета: @Model[i].DepartureDateTime.ToShortTimeString()</h3>
+                        <h3 class="card-title">Дата и время вылета: @Model[i].DepartureDateTime.ToShortDateString() @Model[i].DepartureDateTime.ToShortTimeString()</h3>
                         <h3 class="card-title">Пункт прибытия: @Model[i].ArrivalPoint</h3>
-                        <h3 class="card-title">Дата прибытия: @Model[i].ArrivalDateTime.ToShortDateString()</h3>
-                        <h3 class="card-title">Время прибытия: @Model[i].ArrivalDateTime.ToShortTimeString()</h3>
+                        <h3 class="card-title">Дата и время прибытия: @Model[i].ArrivalDateTime.ToShortDateString() @Model[i].ArrivalDateTime.ToShortTimeString() </h3>
                         <h3 class="card-title">Ряд: @Model[i].Row</h3>
                         <h3 class="card-title">Место: @Model[i].Place</h3>
                         <h3 class="card-title">Класс: @Model[i].Class</h3>
@@ -53,6 +51,7 @@
                         <button type="submit" asp-controller="Orders" asp-action="CancelBooking" asp-route-id="@Model[i].Id" class="btn btn-primary" style="margin-top: 15px">Удалить</button>
                         <button type="submit" asp-controller="Services" asp-action="Index" asp-route-id="@Model[i].Id" class="btn btn-primary" style="margin-top: 15px">Добавить услугу</button>
                         <button type="submit" asp-controller="Services" asp-action="ActiveServices" asp-route-id="@Model[i].Id" class="btn btn-primary" style="margin-top: 15px">Посмотреть добавленные услуги</button>
+                        <button type="submit" asp-controller="Planes" asp-action="GetPlaneOrder" asp-route-id="@Model[i].PlaneId" class="btn btn-primary" style="margin-top: 15px">Самолет, выполняющий рейс</button>
                     </div>
                 </div>
             </form>

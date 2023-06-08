@@ -12,5 +12,18 @@ namespace BlitzFlug.Controllers
 
             return View(planes);
         }
+
+        public IActionResult GetPlane(Plane plane) 
+        {
+            return View(plane.GetPlaneByFlight());
+        }
+
+        public IActionResult GetPlaneOrder(OrderedTicket orderedTicket)
+        {
+            var plane = new Plane();
+            plane.Id = orderedTicket.Id;
+
+            return RedirectToAction("GetPlane", plane);
+        }
     }
 }

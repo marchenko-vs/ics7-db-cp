@@ -100,14 +100,15 @@ namespace BlitzFlug.Repositories
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand($"INSERT INTO Flights (PlaneId, DeparturePoint, ArrivalPoint, DepartureDateTime, ArrivalDateTime) " +
+                SqlCommand command = new SqlCommand($"INSERT INTO Flights (PlaneId, DeparturePoint, ArrivalPoint, " +
+                    $"DepartureDateTime, ArrivalDateTime) " +
                     $"VALUES (@PlaneId, @DeparturePoint, @ArrivalPoint, @DepartureDateTime, @ArrivalDateTime)", connection);
 
                 command.Parameters.AddWithValue("PlaneId", flight.PlaneId);
                 command.Parameters.AddWithValue("DeparturePoint", flight.DeparturePoint);
                 command.Parameters.AddWithValue("ArrivalPoint", flight.ArrivalPoint);
-                command.Parameters.AddWithValue("DepartureDate", flight.DepartureDateTime);
-                command.Parameters.AddWithValue("ArrivalDate", flight.ArrivalDateTime);
+                command.Parameters.AddWithValue("DepartureDateTime", flight.DepartureDateTime);
+                command.Parameters.AddWithValue("ArrivalDateTime", flight.ArrivalDateTime);
 
                 command.ExecuteNonQuery();
             }

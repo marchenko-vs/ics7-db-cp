@@ -29,5 +29,10 @@ namespace BlitzFlug.Models
         {
             return this._db.GetAllPlanes();
         }
+
+        public Plane GetPlaneByFlight()
+        {
+            return this._db.GetPlaneById(this.Id);
+        }
     }
 }

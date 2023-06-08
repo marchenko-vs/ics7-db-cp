@@ -44,7 +44,7 @@ namespace BlitzFlug.Repositories
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand($"SELECT * FROM [Orders] where [Orders].UserId = @UserId", connection);
+                SqlCommand command = new SqlCommand($"SELECT * FROM Orders WHERE UserId = @UserId", connection);
                 command.Parameters.AddWithValue("UserId", userId);
 
                 var dataReader = command.ExecuteReader();
@@ -63,7 +63,7 @@ namespace BlitzFlug.Repositories
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand($"SELECT * FROM [Orders] where [Orders].UserId = @UserId " +
+                SqlCommand command = new SqlCommand($"SELECT * FROM Orders WHERE UserId = @UserId " +
                     $"AND Status = 'создан'", connection);
 
                 command.Parameters.AddWithValue("UserId", userId);
@@ -115,8 +115,8 @@ namespace BlitzFlug.Repositories
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand($"SELECT t.Id, f.DeparturePoint, f.ArrivalPoint, f.DepartureDateTime, " +
-                    $"f.ArrivalDateTime, t.Row, t.Place, t.Class, t.Refund, " +
+                SqlCommand command = new SqlCommand($"SELECT t.Id, f.PlaneId, f.DeparturePoint, f.ArrivalPoint, f.DepartureDateTime, " +
+                    $"f.ArrivalDateTime, t.FlightId, t.OrderId, t.Row, t.Place, t.Class, t.Refund, " +
                     $"t.Price FROM Orders o JOIN Tickets t ON " +
                     $"t.OrderId = o.Id JOIN Flights f ON t.FlightId = f.Id WHERE o.UserId = @userId AND o.Status = 'создан'",
                     connection);

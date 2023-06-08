@@ -1,5 +1,9 @@
 ﻿@{
     Layout = "_Layout";
+    string currentDate = DateTime.Now.ToString();
+    string dateForCalendar = currentDate.Substring(6, 4) + '-' + 
+        currentDate.Substring(3, 2) + '-' + 
+        currentDate.Substring(0, 2);
 }
 
 @model List<string>
@@ -23,7 +27,7 @@
                 <option value="@point">@point</option>
             }
         </select>
-        <input name="DepartureDateTime" value="2023-05-20" type="date" style="width: 175px; height: 60px" required>
+        <input name="DepartureDateTime" value="@dateForCalendar" type="date" style="width: 175px; height: 60px" required>
         <button type="submit" class="btn btn-primary" style="margin-bottom: 5px; width: 175px; height: 60px">Найти рейсы</button>
     </div>
 </form>

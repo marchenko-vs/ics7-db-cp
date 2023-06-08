@@ -1,5 +1,5 @@
 BULK INSERT [dbo].[Tickets]
-FROM 'C:\Users\Vladyslav\source\ics7-db-cp\src\Scripts\Tickets.csv'
+FROM 'C:\Users\Vladyslav\source\repos\ics7-db-cp\src\Scripts\Data\Tickets.csv'
 WITH (
   FIELDTERMINATOR = ',',
   ROWTERMINATOR = '\n',
@@ -7,10 +7,8 @@ WITH (
   datafiletype = 'widechar'
 );
 
-select * from Services;
-
 BULK INSERT [dbo].[Flights]
-FROM 'C:\Users\Vladyslav\source\ics7-db-cp\src\Scripts\Flights.csv'
+FROM 'C:\Users\Vladyslav\source\repos\ics7-db-cp\src\Scripts\Data\Flights.csv'
 WITH (
   FIELDTERMINATOR = ',',
   ROWTERMINATOR = '\n',
@@ -19,7 +17,7 @@ WITH (
 );
 
 BULK INSERT [dbo].[Planes]
-FROM 'C:\Users\Vladyslav\source\ics7-db-cp\src\Scripts\Planes.csv'
+FROM 'C:\Users\Vladyslav\source\repos\ics7-db-cp\src\Scripts\Data\Planes.csv'
 WITH (
   FIELDTERMINATOR = ',',
   ROWTERMINATOR = '\n',

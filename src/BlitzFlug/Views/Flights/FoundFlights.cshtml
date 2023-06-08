@@ -28,6 +28,7 @@
                         <h3 class="card-title">Дата прибытия: @Model[i].ArrivalDateTime.ToShortDateString()</h3>
                         <h3 class="card-title">Время прибытия: @Model[i].ArrivalDateTime.ToShortTimeString()</h3>
                         <button type="submit" class="btn btn-primary" style="margin-top: 15px">Посмотреть билеты</button>
+                        <button type="submit" asp-controller="Planes" asp-action="GetPlane" asp-route-id="@Model[i].PlaneId" class="btn btn-primary" style="margin-top: 15px">Самолет, выполняющий рейс</button>
                     </div>
                 </div>
             </form>

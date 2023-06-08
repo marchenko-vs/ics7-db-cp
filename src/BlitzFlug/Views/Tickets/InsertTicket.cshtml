@@ -11,10 +11,7 @@
     <div class="form-group" style="margin-top: 25px">
         <input asp-for="FlightId" min="1" class="form-control" placeholder="ID рейса" required>
     </div>
-    <div class="form-group" style="margin-top: 25px">
-        <label>Билет забронирован</label>
-        <input asp-for="OrderId" type="checkbox">
-    </div>
+    <input asp-for="OrderId" type="hidden" value="0" required>
     <div class="form-group" style="margin-top: 25px">
         <input asp-for="Row" min="1" class="form-control" placeholder="Ряд" required>
     </div>
@@ -35,10 +32,9 @@
     </div>
     <div class="form-group" style="margin-top: 25px">
         <select asp-for="Class" required>
-            <option value="" selected>Класс</option>
-            <option value="эконом">Эконом</option>
-            <option value="первый">Первый</option>
-            <option value="бизнес">Бизнес</option>
+            <option value="эконом" selected>Экономкласс</option>
+            <option value="бизнес">Бизнес-класс</option>
+            <option value="первый">Первый класс</option>
         </select>
     </div>
     <div class="form-group" style="margin-top: 25px">
@@ -46,7 +42,11 @@
         <input asp-for="Refund" type="checkbox">
     </div>
     <div class="form-group" style="margin-top: 25px">
-        <input asp-for="Price" class="form-control" placeholder="Стоимость" required>
+        <input asp-for="Price" class="form-control" type="number" min="0" placeholder="Стоимость" required>
     </div>
     <button type="submit" class="btn btn-primary" style="margin-top: 25px">Добавить</button>
+    @if (null != ViewData["Error"])
+    {
+        <h3>@ViewData["Error"]</h3>
+    }
 </form>

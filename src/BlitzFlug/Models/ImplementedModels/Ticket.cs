@@ -1,12 +1,5 @@
-﻿using BlitzFlug.Data;
-using BlitzFlug.Repositories;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using BlitzFlug.Repositories;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data;
-using System.Diagnostics;
-using System.Net.Sockets;
 
 namespace BlitzFlug.Models
 {

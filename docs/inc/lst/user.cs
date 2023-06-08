@@ -1,7 +1,6 @@
 public class User
 {
     private IUserRepository<User> _db;
-
     [Key]
     public Int64 Id { get; set; }
     public string Role { get; set; }

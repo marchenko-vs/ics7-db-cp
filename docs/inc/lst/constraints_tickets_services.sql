@@ -1,7 +1,6 @@
-IF OBJECT_ID('[TicketsServices]', 'U') IS NULL
 CREATE TABLE [TicketsServices] (
-	[TicketId] [bigint],
-	[ServiceId] [bigint],
+	[TicketId] [bigint] CHECK (TicketId > 0),
+	[ServiceId] [bigint] CHECK (ServiceId > 0),
 	PRIMARY KEY (TicketId, ServiceId),
 	CONSTRAINT FK_TICKETS_2_ID
 	FOREIGN KEY (TicketId) REFERENCES [Tickets] (Id)

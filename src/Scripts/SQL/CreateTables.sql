@@ -2,7 +2,7 @@ IF OBJECT_ID('[Users]', 'U') IS NULL
 CREATE TABLE [Users] (
 	[Id] [bigint] IDENTITY(1, 1) CHECK (Id > 0),
 	[Role] [varchar](32) NOT NULL,
-	[Email] [varchar](32) NOT NULL,
+	[Email] [varchar](32) NOT NULL UNIQUE,
 	[Password] [varchar](64) NOT NULL,
 	[FirstName] [nvarchar](32),
 	[LastName] [nvarchar](32),
@@ -42,7 +42,7 @@ GO
 IF OBJECT_ID('[Orders]', 'U') IS NULL
 CREATE TABLE [Orders] (
 	[Id] [bigint] IDENTITY(1, 1) CHECK (Id > 0),
-	[UserId] [bigint] CHECK (UserId > 0),
+	[UserId] [bigint] NOT NULL CHECK (UserId > 0),
 	[Status] [nvarchar](16) NOT NULL,
 	PRIMARY KEY (Id),
 	CONSTRAINT FK_USERS_ID
@@ -57,16 +57,13 @@ CREATE TABLE [Tickets] (
 	[FlightId] [bigint] NOT NULL CHECK (FlightId > 0),
 	[OrderId] [bigint],
 	[Row] [int] NOT NULL CHECK (Row > 0),
-	[Place] [char] NOT NULL CHECK (Place > 'A' AND Place < 'L'),
+	[Place] [char] NOT NULL,
 	[Class] [nvarchar](16) NOT NULL,
 	[Refund] [bit] NOT NULL,
 	[Price] [money] CHECK (Price > 0),
 	PRIMARY KEY (Id),
 	CONSTRAINT FK_FLIGHTS_ID
 	FOREIGN KEY (FlightId) REFERENCES [Flights] (Id)
-	ON DELETE CASCADE,
-	CONSTRAINT FK_ORDERS_ID
-	FOREIGN KEY (OrderId) REFERENCES [Orders] (Id)
 	ON DELETE CASCADE,
 );
 GO

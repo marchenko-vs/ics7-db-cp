@@ -30,7 +30,7 @@ namespace BlitzFlug.Controllers
             var ticket = new Ticket();
 
             ticket.Id = orderedTicket.Id;
-            ticket.Available = true;
+            ticket.OrderId = 0;
             ticket.UpdateTicket();
 
             return RedirectToAction("Index", "Orders");

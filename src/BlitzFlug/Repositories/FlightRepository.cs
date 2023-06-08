@@ -15,7 +15,7 @@ namespace BlitzFlug.Repositories
             this._connectionInfo = Startup.ConnectionString;
             var currentUser = SingletonUser.GetInstance();
 
-            if (null == currentUser)
+            if (null == currentUser || null == currentUser.UserInfo)
             {
                 this._userInfo = Startup.CustomerData;
             }
@@ -43,7 +43,7 @@ namespace BlitzFlug.Repositories
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand($"SELECT * FROM [Flights]", connection);
+                SqlCommand command = new SqlCommand($"SELECT * FROM Flights", connection);
 
                 var dataReader = command.ExecuteReader();
 
@@ -59,7 +59,7 @@ namespace BlitzFlug.Repositories
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand($"DELETE FROM [Flights] " +
+                SqlCommand command = new SqlCommand($"DELETE FROM Flights " +
                     $"WHERE Id = @flightId", connection);
 
                 command.Parameters.AddWithValue("flightId", flightId);
@@ -76,15 +76,15 @@ namespace BlitzFlug.Repositories
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand($"SELECT * FROM [Flights] WHERE " +
-                    $"[Flights].departurePoint = @departurePoint AND " +
-                    $"[Flights].arrivalPoint = @arrivalPoint AND " +
-                    $"[Flights].departureDate = @departureDate " +
-                    $"ORDER BY DepartureTime, ArrivalDate, ArrivalTime", connection);
+                SqlCommand command = new SqlCommand($"SELECT * FROM Flights WHERE " +
+                    $"DeparturePoint = @departurePoint AND " +
+                    $"ArrivalPoint = @arrivalPoint AND " +
+                    $"CONVERT(date, DepartureDateTime) = @departureDateTime " +
+                    $"ORDER BY DepartureDateTime, ArrivalDateTime", connection);
 
-                command.Parameters.AddWithValue("departurePoint", departurePoint);
-                command.Parameters.AddWithValue("arrivalPoint", arrivalPoint);
-                command.Parameters.AddWithValue("departureDate", departureDate);
+                command.Parameters.AddWithValue("DeparturePoint", departurePoint);
+                command.Parameters.AddWithValue("ArrivalPoint", arrivalPoint);
+                command.Parameters.AddWithValue("DepartureDateTime", departureDate);
 
                 var dataReader = command.ExecuteReader();
 
@@ -100,15 +100,14 @@ namespace BlitzFlug.Repositories
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand($"INSERT INTO [Flights] (DeparturePoint, ArrivalPoint, DepartureDate, ArrivalDate, DepartureTime, ArrivalTime) " +
-                    $"VALUES (@DeparturePoint, @ArrivalPoint, @DepartureDate, @ArrivalDate, @DepartureTime, @ArrivalTime)", connection);
+                SqlCommand command = new SqlCommand($"INSERT INTO Flights (PlaneId, DeparturePoint, ArrivalPoint, DepartureDateTime, ArrivalDateTime) " +
+                    $"VALUES (@PlaneId, @DeparturePoint, @ArrivalPoint, @DepartureDateTime, @ArrivalDateTime)", connection);
 
+                command.Parameters.AddWithValue("PlaneId", flight.PlaneId);
                 command.Parameters.AddWithValue("DeparturePoint", flight.DeparturePoint);
                 command.Parameters.AddWithValue("ArrivalPoint", flight.ArrivalPoint);
-                command.Parameters.AddWithValue("DepartureDate", flight.DepartureDate);
-                command.Parameters.AddWithValue("ArrivalDate", flight.ArrivalDate);
-                command.Parameters.AddWithValue("DepartureTime", flight.DepartureTime);
-                command.Parameters.AddWithValue("ArrivalTime", flight.ArrivalTime);
+                command.Parameters.AddWithValue("DepartureDate", flight.DepartureDateTime);
+                command.Parameters.AddWithValue("ArrivalDate", flight.ArrivalDateTime);
 
                 command.ExecuteNonQuery();
             }
@@ -120,17 +119,16 @@ namespace BlitzFlug.Repositories
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand($"UPDATE [Flights] SET DeparturePoint = @DeparturePoint, ArrivalPoint = @ArrivalPoint, " +
-                    $"DepartureDate = @DepartureDate, ArrivalDate = @ArrivalDate, DepartureTime = @DepartureTime, ArrivalTime = @ArrivalTime " +
+                SqlCommand command = new SqlCommand($"UPDATE Flights SET PlaneId = @PlaneId, DeparturePoint = @DeparturePoint, ArrivalPoint = @ArrivalPoint, " +
+                    $"DepartureDateTime = @DepartureDate, ArrivalDateTime = @ArrivalDateTime " +
                     $"WHERE Id = @Id", connection);
 
                 command.Parameters.AddWithValue("Id", flight.Id);
+                command.Parameters.AddWithValue("PlaneId", flight.PlaneId);
                 command.Parameters.AddWithValue("DeparturePoint", flight.DeparturePoint);
                 command.Parameters.AddWithValue("ArrivalPoint", flight.ArrivalPoint);
-                command.Parameters.AddWithValue("DepartureDate", flight.DepartureDate);
-                command.Parameters.AddWithValue("ArrivalDate", flight.ArrivalDate);
-                command.Parameters.AddWithValue("DepartureTime", flight.DepartureTime);
-                command.Parameters.AddWithValue("ArrivalTime", flight.ArrivalTime);
+                command.Parameters.AddWithValue("DepartureDateTime", flight.DepartureDateTime);
+                command.Parameters.AddWithValue("ArrivalDateTime", flight.ArrivalDateTime);
 
                 command.ExecuteNonQuery();
             }

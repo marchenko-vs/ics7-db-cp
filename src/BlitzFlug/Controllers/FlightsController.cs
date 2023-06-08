@@ -28,6 +28,7 @@ namespace BlitzFlug.Controllers
         [HttpGet]
         public IActionResult FindFlights(Flight flight)
         {
+            Console.WriteLine(flight.DepartureDateTime);
             List<Flight> flights = flight.GetFlights().ToList();
 
             return View("FoundFlights", flights);

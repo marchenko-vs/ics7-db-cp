@@ -11,10 +11,8 @@ namespace BlitzFlug.Models
         public Int64 Id { get; set; }
         public string DeparturePoint { get; set; }
         public string ArrivalPoint { get; set; }
-        public DateTime DepartureDate { get; set; }
-        public DateTime ArrivalDate { get; set; }
-        public DateTime DepartureTime { get; set; }
-        public DateTime ArrivalTime { get; set; }
+        public DateTime DepartureDateTime { get; set; }
+        public DateTime ArrivalDateTime { get; set; }
         public int Row { get; set; }
         public char Place { get; set; }
         public string Class { get; set; }

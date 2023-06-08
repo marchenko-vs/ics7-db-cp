@@ -85,14 +85,11 @@ namespace BlitzFlug.Repositories
             {
                 connection.Open();
 
-                SqlCommand command1 = new SqlCommand($"DELETE FROM [OrdersTickets] WHERE TicketId = @ticketId", connection);
-                SqlCommand command2 = new SqlCommand($"DELETE FROM [TicketsServices] WHERE TicketId = @ticketId", connection);
+                SqlCommand command = new SqlCommand($"DELETE FROM TicketsServices WHERE TicketId = @ticketId", connection);
 
-                command1.Parameters.AddWithValue("ticketId", ticketId);
-                command2.Parameters.AddWithValue("ticketId", ticketId);
+                command.Parameters.AddWithValue("ticketId", ticketId);
 
-                command1.ExecuteNonQuery();
-                command2.ExecuteNonQuery();
+                command.ExecuteNonQuery();
             }
         }
         public void DeleteOrder(Int64 orderId)
@@ -118,10 +115,10 @@ namespace BlitzFlug.Repositories
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand($"SELECT t.Id, f.DeparturePoint, f.ArrivalPoint, f.DepartureDate, " +
-                    $"f.ArrivalDate, f.DepartureTime, f.ArrivalTime, t.Row, t.Place, t.Class, t.Refund, " +
-                    $"t.Price FROM Orders o JOIN OrdersTickets ot ON o.Id = ot.OrderId JOIN Tickets t ON " +
-                    $"ot.TicketId = t.Id JOIN Flights f ON t.FlightId = f.Id WHERE o.UserId = @userId AND o.Status = 'создан'",
+                SqlCommand command = new SqlCommand($"SELECT t.Id, f.DeparturePoint, f.ArrivalPoint, f.DepartureDateTime, " +
+                    $"f.ArrivalDateTime, t.Row, t.Place, t.Class, t.Refund, " +
+                    $"t.Price FROM Orders o JOIN Tickets t ON " +
+                    $"t.OrderId = o.Id JOIN Flights f ON t.FlightId = f.Id WHERE o.UserId = @userId AND o.Status = 'создан'",
                     connection);
 
                 command.Parameters.AddWithValue("userId", userId);

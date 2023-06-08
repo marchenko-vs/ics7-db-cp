@@ -14,10 +14,8 @@ namespace BlitzFlug.Models
         public Int64 PlaneId { get; set; }
         public string DeparturePoint { get; set; }
         public string ArrivalPoint { get; set; }
-        public DateTime DepartureDate { get; set; }
-        public DateTime ArrivalDate { get; set; }
-        public DateTime DepartureTime { get; set; }
-        public DateTime ArrivalTime { get; set; }
+        public DateTime DepartureDateTime { get; set; }
+        public DateTime ArrivalDateTime { get; set; }
 
         public Flight()
         {
@@ -57,7 +55,7 @@ namespace BlitzFlug.Models
 
         public IEnumerable<Flight> GetFlights()
         {
-            return this._db.GetFlights(this.DeparturePoint, this.ArrivalPoint, this.DepartureDate);            
+            return this._db.GetFlights(this.DeparturePoint, this.ArrivalPoint, this.DepartureDateTime);            
         }
 
         public void InsertFlight()

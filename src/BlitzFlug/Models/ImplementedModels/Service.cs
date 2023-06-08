@@ -13,8 +13,8 @@ namespace BlitzFlug.Models
         public string Name { get; set; }
         public decimal Price { get; set; }
         public bool EconomyClass { get; set; }
-        public bool FirstClass { get; set; }
         public bool BusinessClass { get; set; }
+        public bool FirstClass { get; set; }
 
         public Service()
         {

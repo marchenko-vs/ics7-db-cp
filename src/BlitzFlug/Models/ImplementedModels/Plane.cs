@@ -13,8 +13,8 @@ namespace BlitzFlug.Models
         public string Manufacturer { get; set; }
         public string Model { get; set; }
         public uint EconomyClassNum{ get; set; }
-        public uint FirstClassNum { get; set; }
         public uint BusinessClassNum { get; set; }
+        public uint FirstClassNum { get; set; }
 
         public Plane()
         {

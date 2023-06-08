@@ -16,9 +16,8 @@ namespace BlitzFlug.Models
 
         [Key]
         public Int64 Id { get; set; }
-        [ForeignKey("Flights")]
         public Int64 FlightId { get; set; }
-        public bool Available { get; set; }
+        public Int64 OrderId { get; set; }
         public int Row { get; set; }
         public char Place { get; set; }
         public string Class { get; set; }
@@ -64,7 +63,7 @@ namespace BlitzFlug.Models
 
             foreach (var ticket in tickets.ToList())
             {
-                if (!ticket.Available)
+                if (0 != ticket.OrderId)
                 {
                     tickets.Remove(ticket);
                 }
@@ -82,18 +81,15 @@ namespace BlitzFlug.Models
 
         public void BookTicket()
         {
-            this.Available = false;
-            this._db.UpdateTicket(this);
-
             var currentUser = SingletonUser.GetInstance(new User());
             var order = new Order(currentUser.UserInfo.Id);
 
-            order.AddTicketToOrder(this);
-        }
+            order.AddTicketToOrder();
+            order = order.GetActiveOrderByUserId(order.UserId);
+            Console.WriteLine(order.Id);
 
-        public void AddTicket(Int64 orderId, Int64 ticketId)
-        {
-            this._db.BookTicket(orderId, ticketId);
+            this.OrderId = order.Id;
+            this._db.UpdateTicket(this);
         }
 
         public void DeleteTicket()
@@ -105,7 +101,7 @@ namespace BlitzFlug.Models
         {
             this._db.UpdateTicket(this);
 
-            if (this.Available)
+            if (0 == this.OrderId)
             {
                 var order = new Order();
                 order.DeleteTicketFromOrder(this.Id);

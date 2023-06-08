@@ -38,7 +38,7 @@
                         }
                         <h3 class="card-title">Класс: @Model[i].Class</h3>
                         <h3 class="card-title">Стоимость: @Model[i].Price</h3>
-                        @if (!Model[i].Available)
+                        @if (0 != Model[i].OrderId)
                         {
                             <h3 class="card-title">Билет забронирован/куплен</h3>
                         }

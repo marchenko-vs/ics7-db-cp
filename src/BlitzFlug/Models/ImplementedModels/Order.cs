@@ -76,20 +76,14 @@ namespace BlitzFlug.Models
             Console.WriteLine($"{time / 100} ms.");
         }
 
-        public void AddTicketToOrder(Ticket ticket)
+        public void AddTicketToOrder()
         {
-            IEnumerable<Order> orders = this._db.GetOrderByUserId(this.UserId);
-            List<Order> ordersList;
+            List<Order> orders = this._db.GetOrderByUserId(this.UserId).ToList();
 
-            if (0 == orders.Count() || "оплачен" == orders.ToList()[orders.ToList().Count - 1].Status)
+            if (0 == orders.Count || "оплачен" == orders.ToList()[orders.ToList().Count - 1].Status)
             {
                 this._db.InsertOrder(this.UserId);
             }
-
-            ordersList = this._db.GetOrderByUserId(this.UserId).ToList();
-
-            Int64 orderId = ordersList[ordersList.Count - 1].Id;
-            ticket.AddTicket(orderId, ticket.Id);
         }
 
         public IEnumerable<OrderedTicket> GetOrder(Int64 userId)
@@ -123,7 +117,7 @@ namespace BlitzFlug.Models
                 {
                     var ticket_ = new Ticket();
                     ticket_.Id = ticket.Id;
-                    ticket_.Available = true;
+                    ticket_.OrderId = 0;
                     ticket_.UpdateTicket();
                 }
             }
@@ -146,13 +140,6 @@ namespace BlitzFlug.Models
                 var newOrder = new Order();
                 newOrder = orders.ToList()[orders.ToList().Count - 1];
                 newOrder.Status = "оплачен";
-
-                foreach (var ticket in tickets)
-                {
-                    var ticket_ = new Ticket();
-                    ticket_.Id = ticket.Id;
-                    newOrder.DeleteTicketFromOrder(ticket_.Id);
-                }
 
                 this._db.UpdateOrder(newOrder);
             }

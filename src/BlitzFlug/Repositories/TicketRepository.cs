@@ -118,8 +118,8 @@ namespace BlitzFlug.Repositories
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand($"SELECT * FROM [Tickets] WHERE " +
-                    $"Class = @className AND FlightId = @flightId AND Available = 1", connection);
+                SqlCommand command = new SqlCommand($"SELECT * FROM Tickets WHERE " +
+                    $"Class = @className AND FlightId = @flightId AND OrderId > 0", connection);
                 
                 command.Parameters.AddWithValue("className", className);
                 command.Parameters.AddWithValue("flightId", flightId);
@@ -132,31 +132,17 @@ namespace BlitzFlug.Repositories
             return tickets;
         }
 
-        public void BookTicket(Int64 orderId, Int64 ticketId)
-        {
-            using (SqlConnection connection = new SqlConnection(this._connectionString))
-            {
-                connection.Open();
-
-                SqlCommand command = new SqlCommand($"INSERT INTO [OrdersTickets] (OrderId, TicketId) VALUES " +
-                    $"(@orderId, @ticketId)", connection);
-               
-                command.Parameters.AddWithValue("orderId", orderId);
-                command.Parameters.AddWithValue("ticketId", ticketId);
-
-                command.ExecuteNonQuery();
-            }
-        }
-
         public void UpdateTicket(Ticket ticket)
         {
+            Console.WriteLine(ticket.OrderId);
             using (SqlConnection connection = new SqlConnection(this._connectionString))
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand($"UPDATE [Tickets] SET [Tickets].Available = @Available WHERE [Tickets].Id = @Id", connection);
+                SqlCommand command = new SqlCommand($"UPDATE Tickets SET OrderId = @OrderId WHERE Id = @Id", connection);
+                
                 command.Parameters.AddWithValue("Id", ticket.Id);
-                command.Parameters.AddWithValue("Available", ticket.Available);
+                command.Parameters.AddWithValue("OrderId", ticket.OrderId);
 
                 var dataReader = command.ExecuteReader();
 
@@ -170,11 +156,11 @@ namespace BlitzFlug.Repositories
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand($"INSERT INTO [Tickets] (FlightId, Available, Row, Place, Class, Refund, Price) " +
-                    $"VALUES (@FlightId, @Available, @Row, @Place, @Class, @Refund, @Price)", connection);
+                SqlCommand command = new SqlCommand($"INSERT INTO Tickets (FlightId, OrderId, Row, Place, Class, Refund, Price) " +
+                    $"VALUES (@FlightId, @OrderId, @Row, @Place, @Class, @Refund, @Price)", connection);
                 
                 command.Parameters.AddWithValue("FlightId", ticket.FlightId);
-                command.Parameters.AddWithValue("Available", ticket.Available);
+                command.Parameters.AddWithValue("OrderId", ticket.OrderId);
                 command.Parameters.AddWithValue("Row", ticket.Row);
                 command.Parameters.AddWithValue("Place", ticket.Place);
                 command.Parameters.AddWithValue("Class", ticket.Class);

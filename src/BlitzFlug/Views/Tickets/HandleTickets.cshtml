@@ -1,0 +1,51 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model List<BlitzFlug.Models.Ticket>
+
+<div class="container">
+    @if (null == Model)
+    {
+        <div class="text-center" style="margin-top: 150px">
+            <h2>Билеты не найдены</h2>
+        </div>
+    }
+    else
+    {
+        <div class="text-center" style="margin-top: 150px">
+            <h2>Управление билетами</h2>
+        </div>
+        <form method="get" asp-controller="Tickets" asp-action="InsertTicket">
+            <button type="submit" class="btn btn-primary" style="margin-top: 25px">Добавить новый билет</button>
+        </form>
+        @for (var i = 0; i < Model.Count; ++i)
+        {
+            <form method="post" asp-controller="Tickets" asp-action="DeleteTicket" asp-route-id="@Model[i].Id">
+                <div class="card text-left" style="margin-top: 20px">
+                    <div class="card-body">
+                        <h3 class="card-title">ID: @Model[i].Id</h3>
+                        <h3 class="card-title">ID рейса: @Model[i].FlightId</h3>
+                        <h3 class="card-title">Ряд: @Model[i].Row</h3>
+                        <h3 class="card-title">Место: @Model[i].Place</h3>
+                        @if (Model[i].Refund)
+                        {
+                            <h3 class="card-title">Есть возможность возврата</h3>
+                        }
+                        else
+                        {
+                            <h3 class="card-title">Нет возможности возврата</h3>
+                        }
+                        <h3 class="card-title">Класс: @Model[i].Class</h3>
+                        <h3 class="card-title">Стоимость: @Model[i].Price</h3>
+                        @if (!Model[i].Available)
+                        {
+                            <h3 class="card-title">Билет забронирован/куплен</h3>
+                        }
+                        <button type="submit" class="btn btn-primary" style="margin-top: 15px">Удалить</button>
+                    </div>
+                </div>
+            </form>
+        }
+    }
+</div>

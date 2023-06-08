@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model List<BlitzFlug.Models.Flight>
+
+<div class="container">
+    @if (null == Model)
+    {
+        <div class="text-center" style="margin-top: 150px">
+            <h2>Рейсы не найдены</h2>
+        </div>
+    }
+    else
+    {
+        <div class="text-center" style="margin-top: 150px">
+            <h2>Управление рейсами</h2>
+        </div>
+        <form method="get" asp-controller="Flights" asp-action="InsertFlight">
+            <button type="submit" class="btn btn-primary" style="margin-top: 25px">Добавить новый рейс</button>
+        </form>
+        @for (var i = 0; i < Model.Count; ++i)
+        {
+            <form method="post" asp-controller="Flights" asp-action="DeleteFlight" asp-route-id="@Model[i].Id">
+                <div class="card text-left" style="margin-top: 20px">
+                    <div class="card-body">
+                        <h3 class="card-title">ID: @Model[i].Id</h3>
+                        <h3 class="card-title">Пункт вылета: @Model[i].DeparturePoint</h3>
+                        <h3 class="card-title">Дата вылета: @Model[i].DepartureDate.ToShortDateString()</h3>
+                        <h3 class="card-title">Время вылета: @Model[i].DepartureTime.ToShortTimeString()</h3>
+                        <h3 class="card-title">Пункт прибытия: @Model[i].ArrivalPoint</h3>
+                        <h3 class="card-title">Дата прибытия: @Model[i].ArrivalDate.ToShortDateString()</h3>
+                        <h3 class="card-title">Время прибытия: @Model[i].ArrivalTime.ToShortTimeString()</h3>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 15px">Удалить</button>
+                    </div>
+                </div>
+            </form>
+        }
+    }
+</div>

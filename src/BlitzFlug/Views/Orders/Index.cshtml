@@ -1,0 +1,61 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model List<BlitzFlug.Models.OrderedTicket>
+
+<div class="container">
+    @if (0 == Model.Count)
+    {
+        <div class="text-center" style="margin-top: 150px">
+            <h2>Ваш заказ пуст</h2>
+        </div>
+    }
+    else
+    {
+        <div class="text-center" style="margin-top: 150px">
+            <h2>Заказ</h2>
+        </div>
+        <div>
+            <form method="post" asp-controller="Orders" asp-action="Purchase">
+                <button type="submit" class="btn btn-primary" style="width: 200px; margin-top: 25px">Оплатить</button>
+            </form>
+            <form method="post" asp-controller="Orders" asp-action="ClearOrder">
+                <button type="submit" class="btn btn-primary" style="width: 200px; margin-top: 25px">Очистить корзину</button>
+            </form>
+        </div>
+        <div class="text-center" style="margin-top: 25px">
+            <h3>Стоимость заказа: @ViewData["Order"] &#8381;</h3>
+        </div>
+        @for (var i = 0; i < Model.Count; ++i)
+        {
+            <form method="post">
+                <div class="card text-left" style="margin-top: 20px">
+                    <div class="card-body">
+                        <h3 class="card-title">Пункт вылета: @Model[i].DeparturePoint</h3>
+                        <h3 class="card-title">Дата вылета: @Model[i].DepartureDate.ToShortDateString()</h3>
+                        <h3 class="card-title">Время вылета: @Model[i].DepartureTime.ToShortTimeString()</h3>
+                        <h3 class="card-title">Пункт прибытия: @Model[i].ArrivalPoint</h3>
+                        <h3 class="card-title">Дата прибытия: @Model[i].ArrivalDate.ToShortDateString()</h3>
+                        <h3 class="card-title">Время прибытия: @Model[i].ArrivalTime.ToShortTimeString()</h3>
+                        <h3 class="card-title">Ряд: @Model[i].Row</h3>
+                        <h3 class="card-title">Место: @Model[i].Place</h3>
+                        <h3 class="card-title">Класс: @Model[i].Class</h3>
+                        @if (Model[i].Refund)
+                        {
+                            <h3 class="card-title">Есть возможность возврата</h3>
+                        }
+                        else
+                        {
+                            <h3 class="card-title">Нет возможности возврата</h3>
+                        }
+                        <h3 class="card-title">Стоимость: @Model[i].Price.ToString("F") &#8381;</h3>
+                        <button type="submit" asp-controller="Orders" asp-action="CancelBooking" asp-route-id="@Model[i].Id" class="btn btn-primary" style="margin-top: 15px">Удалить</button>
+                        <button type="submit" asp-controller="Services" asp-action="Index" asp-route-id="@Model[i].Id" class="btn btn-primary" style="margin-top: 15px">Добавить услугу</button>
+                        <button type="submit" asp-controller="Services" asp-action="ActiveServices" asp-route-id="@Model[i].Id" class="btn btn-primary" style="margin-top: 15px">Посмотреть добавленные услуги</button>
+                    </div>
+                </div>
+            </form>
+        }
+    }
+</div>

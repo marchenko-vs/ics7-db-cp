@@ -1,0 +1,33 @@
+﻿@{
+    var loggedIn = Context.User.Identity.IsAuthenticated;
+    var isModerator = Context.User.IsInRole("moderator");
+    var isAdmin = Context.User.IsInRole("admin");
+}
+
+@if (loggedIn)
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Заказ</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Settings">Личный кабинет</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="LogOut">Выйти</a>
+    </li>
+    @if (isModerator || isAdmin)
+    {
+        <li class="nav-item dropbtn">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="AdminPanel">Панель администратора</a>
+        </li>
+    }
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Register">Зарегистрироваться</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Login">Войти</a>
+    </li>
+}

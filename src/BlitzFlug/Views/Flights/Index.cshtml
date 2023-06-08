@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model List<string>
+
+<div class="text-center" style="margin-top: 150px">
+    <h2>Поиск билетов на рейсы компании BlitzFlug</h2>
+</div>
+<form method="get" asp-controller="Flights" asp-action="FindFlights">
+    <div class="text-center" style="margin-top: 100px">
+        <select name="DeparturePoint" style="width: 175px; height: 60px" required>
+            <option value="" selected>Пункт вылета</option>
+            @foreach (var point in Model)
+            {
+                <option value="@point">@point</option>
+            }
+        </select>
+        <select name="ArrivalPoint" style="width: 175px; height: 60px" required>
+            <option value="" selected>Пункт прибытия</option>
+            @foreach (var point in Model)
+            {
+                <option value="@point">@point</option>
+            }
+        </select>
+        <input name="DepartureDate" value="2023-05-20" type="date" style="width: 175px; height: 60px" required>
+        <button type="submit" class="btn btn-primary" style="margin-bottom: 5px; width: 175px; height: 60px">Найти рейсы</button>
+    </div>
+</form>

@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model IEnumerable<BlitzFlug.Models.Plane>
+
+<div class="container">
+    <div class="text-center" style="margin-top: 150px">
+        <h2>Самолеты нашей компании</h2>
+    </div>
+    @foreach (var plane in Model)
+    {
+        <div class="card text-left" style="margin-top: 20px">
+            <div class="card-body">
+                <h3 class="card-title">Производитель: @plane.Manufacturer</h3>
+                <h3 class="card-title">Модель: @plane.Model</h3>
+                <h3 class="card-title">Количество мест эконом класса: @plane.EconomyClassNum</h3>
+                <h3 class="card-title">Количество мест первого класса: @plane.FirstClassNum</h3>
+                <h3 class="card-title">Количество мест бизнес-класса: @plane.BusinessClassNum</h3>
+            </div>
+        </div>
+    }
+</div>

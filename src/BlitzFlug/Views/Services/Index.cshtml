@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "_Layout";
+    var ticketId = Convert.ToInt64(ViewData["TicketId"]);
+}
+
+@model IEnumerable<BlitzFlug.Models.Service>
+
+@if (null != ViewData["EmptyFlightList"])
+{
+    <div class="text-center" style="margin-top: 150px">
+        <h2>@ViewData["EmptyFlightList"]</h2>
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="text-center">
+            <h2>Дополнительные услуги</h2>
+        </div>
+        @foreach (var service in Model)
+        {
+            <div class="card text-left">
+                <div class="card-body">
+                    <h3 class="card-title">Название услуги: @service.Name</h3>
+                    <h3 class="card-title">Стоимость: @service.Price.ToString("F") &#8381;</h3>
+                </div>
+                <form method="post" asp-controller="Services" asp-action="AddService">
+                    <input name="serviceId" type="hidden" value="@service.Id" />
+                    <input name="ticketId" type="hidden" value="@ticketId" />
+                    <button type="submit" style="width: 175px; height: 60px; margin-left: 10px">Добавить услугу</button>
+                </form>
+            </div>
+        }
+    </div>
+}
+

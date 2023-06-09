@@ -23,14 +23,8 @@ else
                 <div class="card-body">
                     <h3 class="card-title">Название услуги: @service.Name</h3>
                     <h3 class="card-title">Стоимость: @service.Price.ToString("F") &#8381;</h3>
-                    <form method="post" asp-controller="Services" asp-action="DeleteFromTicket">
-                        <input name="ticketId" type="hidden" value="@ticketId" />
-                        <input name="serviceId" type="hidden" value="@service.Id" />
-                        <button type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px">Удалить</button>
-                    </form>
                 </div>
             </div>
         }
     </div>
 }
-

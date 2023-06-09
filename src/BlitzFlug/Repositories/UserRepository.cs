@@ -1,5 +1,6 @@
 ﻿using BlitzFlug.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
 namespace BlitzFlug.Repositories
@@ -16,21 +17,13 @@ namespace BlitzFlug.Repositories
             var currentUser = SingletonUser.GetInstance();
 
             if (null == currentUser || null == currentUser.UserInfo)
-            {
                 this._userInfo = Startup.CustomerData;
-            }
             else if ("customer" == currentUser.UserInfo.Role)
-            {
                 this._userInfo = Startup.CustomerData;
-            }
             else if ("moderator" == currentUser.UserInfo.Role)
-            {
                 this._userInfo = Startup.ModeratorData;
-            }
             else
-            {
                 this._userInfo = Startup.AdminData;
-            }
 
             this._connectionString = this._connectionInfo + this._userInfo;
         }
@@ -125,11 +118,18 @@ namespace BlitzFlug.Repositories
             
                 SqlCommand command = new SqlCommand($"INSERT INTO [Users] (Role, Email, Password, FirstName, LastName, RegDate) VALUES " +
                     $"(@Role, @Email, @Password, @FirstName, @LastName, @RegDate)", connection);
+                
                 command.Parameters.AddWithValue("Role", user.Role);
                 command.Parameters.AddWithValue("Email", user.Email);
                 command.Parameters.AddWithValue("Password", user.Password);
-                command.Parameters.AddWithValue("FirstName", user.FirstName);
-                command.Parameters.AddWithValue("LastName", user.LastName);
+                if (string.IsNullOrEmpty(user.FirstName))
+                    command.Parameters.AddWithValue("FirstName", DBNull.Value);
+                else
+                    command.Parameters.AddWithValue("FirstName", user.FirstName);
+                if (string.IsNullOrEmpty(user.LastName))
+                    command.Parameters.AddWithValue("LastName", DBNull.Value);
+                else
+                    command.Parameters.AddWithValue("LastName", user.LastName);
                 command.Parameters.AddWithValue("RegDate", user.RegDate);
 
                 command.ExecuteNonQuery();
@@ -142,13 +142,21 @@ namespace BlitzFlug.Repositories
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand($"UPDATE [Users] SET [Users].Email = @Email," +
-                                                    $"[Users].FirstName = @FirstName," +
-                                                    $"[Users].LastName = @LastName WHERE [Users].Id = @Id", connection);
+                SqlCommand command = new SqlCommand($"UPDATE Users SET Email = @Email," +
+                                                    $"FirstName = @FirstName," +
+                                                    $"LastName = @LastName WHERE Id = @Id", connection);
+
+                Console.WriteLine(user.Id);
                 command.Parameters.AddWithValue("Id", user.Id);
                 command.Parameters.AddWithValue("Email", user.Email);
-                command.Parameters.AddWithValue("FirstName", user.FirstName);
-                command.Parameters.AddWithValue("LastName", user.LastName);
+                if (string.IsNullOrEmpty(user.FirstName))
+                    command.Parameters.AddWithValue("FirstName", DBNull.Value);
+                else
+                    command.Parameters.AddWithValue("FirstName", user.FirstName);
+                if (string.IsNullOrEmpty(user.LastName))
+                    command.Parameters.AddWithValue("LastName", DBNull.Value);
+                else
+                    command.Parameters.AddWithValue("LastName", user.LastName);
 
                 command.ExecuteReader();
             }

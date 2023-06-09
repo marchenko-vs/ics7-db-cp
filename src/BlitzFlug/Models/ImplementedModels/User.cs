@@ -108,20 +108,19 @@ namespace BlitzFlug.Models
             var singletonUser = SingletonUser.GetInstance();
             var currentUser = this.GetCurrentUser(singletonUser.UserInfo.Email);
 
+            if (null == currentUser)
+                throw new NotLoggedInException("Ошибка аутентификации");
+
             this.Id = currentUser.Id;
 
             if (string.IsNullOrEmpty(this.Email))
-            {
                 this.Email = currentUser.Email;
-            }
+
             if (string.IsNullOrEmpty(this.FirstName))
-            {
                 this.FirstName = currentUser.FirstName;
-            }
+
             if (string.IsNullOrEmpty(this.LastName))
-            {
                 this.LastName = currentUser.LastName;
-            }
 
             try
             {
@@ -145,7 +144,13 @@ namespace BlitzFlug.Models
 
         public List<User> GetAllUsers()
         {
-            return this._db.GetAllUsers().ToList();
+            var currentUser = SingletonUser.GetInstance();
+            List<User> users = this._db.GetAllUsers().ToList();
+
+            var itemToRemove = users.Single(r => r.Id == currentUser.UserInfo.Id);
+            users.Remove(itemToRemove);
+
+            return users;
         }
 
         public void DeleteUser()

@@ -26,11 +26,11 @@ namespace BlitzFlug.Controllers
 
         public IActionResult CancelBooking(OrderedTicket orderedTicket)
         {
-            Console.WriteLine(orderedTicket.Id);
-            var ticket = new Ticket();
-
-            ticket.Id = orderedTicket.Id;
-            ticket.OrderId = 0;
+            var ticket = new Ticket
+            {
+                Id = orderedTicket.Id,
+                OrderId = 0
+            };
             ticket.UpdateTicket();
 
             return RedirectToAction("Index", "Orders");
@@ -50,6 +50,31 @@ namespace BlitzFlug.Controllers
             order.PurchaseOrder();
 
             return View("Purchased");
+        }
+
+        public IActionResult OrdersHistory()
+        {
+            var currentUser = SingletonUser.GetInstance();
+            var order = new Order() { UserId = currentUser.UserInfo.Id };
+
+            return View(order.GetOrdersHistory().ToList());
+        }
+
+        public IActionResult ShowOrderDetails(Order order)
+        {
+            return View(order.GetOrderById().ToList());
+        }
+
+        public IActionResult IssueRefund(OrderedTicket orderedTicket)
+        {
+            var ticket = new Ticket
+            {
+                Id = orderedTicket.Id,
+                OrderId = 0
+            };
+            ticket.UpdateTicket();
+
+            return RedirectToAction("OrdersHistory");
         }
     }
 }

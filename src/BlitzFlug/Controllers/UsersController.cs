@@ -4,9 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Security.Principal;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
 
 namespace BlitzFlug.Controllers
 {
@@ -30,6 +27,10 @@ namespace BlitzFlug.Controllers
             try
             {
                 user.ChangeProfile();
+            }
+            catch (NotLoggedInException)
+            {
+                return RedirectToAction("LogOut", "Users");
             }
             catch (Exception ex)
             {

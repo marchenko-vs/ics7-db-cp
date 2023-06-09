@@ -8,6 +8,9 @@
     <h2>Личный кабинет</h2>
 </div>
 
+<form method="get" asp-controller="Orders" asp-action="OrdersHistory">
+    <button type="submit" class="btn btn-primary" style="margin-top: 15px">История заказов</button>
+</form>
 <form method="post" asp-controller="Users" asp-action="Settings">
     <div class="form-group" style="margin-top: 25px">
         <input asp-for="Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Адрес электронной почты">

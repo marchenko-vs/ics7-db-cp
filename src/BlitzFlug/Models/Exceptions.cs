@@ -31,4 +31,12 @@ namespace BlitzFlug.Models
 
         }
     }
+
+    public class NotLoggedInException : Exception
+    {
+        public NotLoggedInException(string info) : base(info)
+        {
+
+        }
+    }
 }

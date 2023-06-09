@@ -16,18 +16,6 @@ else
         <div class="text-center" style="margin-top: 150px">
             <h2>Найденные билеты</h2>
         </div>
-        <!--<form method="get" asp-controller="Tickets" asp-action="GetFlightsByClass" style="margin-top: 25px">
-            <input name="flightId" type="hidden" value="@Model.ToList()[0].FlightId" />
-            <div class="text-center">
-                <select name="className" style="width: 175px; height: 60px" required>
-                    <option value="" selected>Класс</option>
-                    <option value="Эконом">Эконом</option>
-                    <option value="Первый">Первый</option>
-                    <option value="Бизнес">Бизнес</option>
-                </select>
-                <button type="submit" style="width: 175px; height: 60px; margin-left: 10px">Подобрать билеты</button>
-            </div>
-        </form>-->
         @for (var i = 0; i < Model.Count; ++i)
         {
             <form method="get" asp-controller="Tickets" asp-action="BookTicket" asp-route-id="@Model[i].Id">

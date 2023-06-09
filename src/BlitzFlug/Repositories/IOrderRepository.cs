@@ -6,8 +6,9 @@ namespace BlitzFlug.Repositories
         where T : class
     {
         public IEnumerable<T> GetOrderByUserId(Int64 userId);
-        public IEnumerable<OrderedTicket> GetTicketsByOrderId(Int64 orderId);
+        public IEnumerable<OrderedTicket> GetTicketsByUserId(Int64 userId);
         public T GetActiveOrderByUserId(Int64 userId);
+        public IEnumerable<OrderedTicket> GetTicketsByOrderId(Int64 orderId);
         public void DeleteTicketFromOrder(Int64 ticketId);
         public decimal GetOrderPrice(Int64 orderId);
         public void InsertOrder(Int64 userId);

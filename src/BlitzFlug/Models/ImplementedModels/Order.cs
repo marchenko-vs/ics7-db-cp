@@ -88,7 +88,7 @@ namespace BlitzFlug.Models
 
         public IEnumerable<OrderedTicket> GetOrder(Int64 userId)
         {
-            return this._db.GetTicketsByOrderId(userId);
+            return this._db.GetTicketsByUserId(userId);
         }
 
         public void DeleteTicketFromOrder(Int64 ticketId)
@@ -148,6 +148,16 @@ namespace BlitzFlug.Models
         public decimal GetOrderPrice(Int64 userId)
         { 
             return this._db.GetOrderPrice(userId);
+        }
+
+        public IEnumerable<Order> GetOrdersHistory()
+        {
+            return this._db.GetOrderByUserId(this.UserId);
+        }
+
+        public IEnumerable<OrderedTicket> GetOrderById()
+        {
+            return this._db.GetTicketsByOrderId(this.Id);
         }
     }
 }

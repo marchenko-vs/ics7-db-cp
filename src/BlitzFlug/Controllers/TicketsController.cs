@@ -17,15 +17,20 @@ namespace BlitzFlug.Controllers
             return View(tickets);
         }
 
+        [Authorize]
         public IActionResult BookTicket(Ticket ticket)
         {
-            ClaimsPrincipal user = HttpContext.User;
-
-            if (!user.Identity.IsAuthenticated)
-                return RedirectToAction("Register", "Users");
-
             ticket = ticket.GetTicketById();
-            ticket.BookTicket();
+
+            try
+            {
+                ticket.BookTicket();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Register", "Users");
+            }
+
             List<Ticket> tickets = ticket.GetAvailableTickets(ticket.FlightId).ToList();
 
             return View("Index", tickets);

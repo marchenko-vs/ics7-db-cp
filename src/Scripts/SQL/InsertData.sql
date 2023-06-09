@@ -27,7 +27,7 @@ WITH (
 GO
 
 BULK INSERT [dbo].[Services]
-FROM 'C:\Users\Vladyslav\source\repos\ics7-db-cp\src\Scripts\Services.csv'
+FROM 'C:\Users\Vladyslav\source\repos\ics7-db-cp\src\Scripts\Data\Services.csv'
 WITH (
   FIELDTERMINATOR = ',',
   ROWTERMINATOR = '\n',

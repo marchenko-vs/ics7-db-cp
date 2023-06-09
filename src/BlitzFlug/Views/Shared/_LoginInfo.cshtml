@@ -7,13 +7,13 @@
 @if (loggedIn)
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Заказ</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="LogOut">Выйти</a>
     </li>
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Settings">Личный кабинет</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="LogOut">Выйти</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Заказ</a>
     </li>
     @if (isModerator || isAdmin)
     {
@@ -25,9 +25,9 @@
 else
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Register">Зарегистрироваться</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Login">Войти</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Login">Войти</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Register">Зарегистрироваться</a>
     </li>
 }

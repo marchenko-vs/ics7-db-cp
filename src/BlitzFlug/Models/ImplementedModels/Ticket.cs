@@ -79,7 +79,6 @@ namespace BlitzFlug.Models
 
             order.AddTicketToOrder();
             order = order.GetActiveOrderByUserId(order.UserId);
-            Console.WriteLine(order.Id);
 
             this.OrderId = order.Id;
             this._db.UpdateTicket(this);

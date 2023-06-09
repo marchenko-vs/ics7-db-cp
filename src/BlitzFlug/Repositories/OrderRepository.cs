@@ -107,7 +107,7 @@ namespace BlitzFlug.Repositories
             }
         }
 
-        public IEnumerable<OrderedTicket> GetTicketsByOrderId(Int64 userId)
+        public IEnumerable<OrderedTicket> GetTicketsByUserId(Int64 userId)
         {
             List<OrderedTicket> orders = new List<OrderedTicket>();
 
@@ -122,6 +122,30 @@ namespace BlitzFlug.Repositories
                     connection);
 
                 command.Parameters.AddWithValue("userId", userId);
+
+                var dataReader = command.ExecuteReader();
+
+                orders = QueryHandler.GetList<OrderedTicket>(dataReader);
+            }
+
+            return orders;
+        }
+
+        public IEnumerable<OrderedTicket> GetTicketsByOrderId(Int64 orderId)
+        {
+            List<OrderedTicket> orders = new List<OrderedTicket>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand($"SELECT t.Id, f.PlaneId, f.DeparturePoint, f.ArrivalPoint, f.DepartureDateTime, " +
+                    $"f.ArrivalDateTime, t.FlightId, t.OrderId, t.Row, t.Place, t.Class, t.Refund, " +
+                    $"t.Price FROM Orders o JOIN Tickets t ON " +
+                    $"t.OrderId = o.Id JOIN Flights f ON t.FlightId = f.Id WHERE o.Id = @orderId",
+                    connection);
+
+                command.Parameters.AddWithValue("orderId", orderId);
 
                 var dataReader = command.ExecuteReader();
 

@@ -14,21 +14,21 @@
 else
 {
     <div class="container">
-        <div class="text-center">
+        <div class="text-center" style="margin-top: 150px">
             <h2>Дополнительные услуги</h2>
         </div>
         @foreach (var service in Model)
         {
-            <div class="card text-left">
+            <div class="card text-left" style="margin-top: 20px">
                 <div class="card-body">
                     <h3 class="card-title">Название услуги: @service.Name</h3>
                     <h3 class="card-title">Стоимость: @service.Price.ToString("F") &#8381;</h3>
+                    <form method="post" asp-controller="Services" asp-action="AddService">
+                        <input name="serviceId" type="hidden" value="@service.Id" />
+                        <input name="ticketId" type="hidden" value="@ticketId" />
+                        <button type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px">Добавить услугу</button>
+                    </form>
                 </div>
-                <form method="post" asp-controller="Services" asp-action="AddService">
-                    <input name="serviceId" type="hidden" value="@service.Id" />
-                    <input name="ticketId" type="hidden" value="@ticketId" />
-                    <button type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px">Добавить услугу</button>
-                </form>
             </div>
         }
     </div>

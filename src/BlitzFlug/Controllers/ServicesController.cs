@@ -42,6 +42,15 @@ namespace BlitzFlug.Controllers
             return View(service.GetActiveServices(ticket.Id).ToList());
         }
 
+        public IActionResult PurchasedServices(Ticket ticket)
+        {
+            var service = new Service();
+
+            ViewData["ticketId"] = ticket.Id;
+
+            return View(service.GetActiveServices(ticket.Id).ToList());
+        }
+
         public IActionResult DeleteFromTicket(Int64 ticketId, Int64 serviceId)
         {
             var service = new Service();

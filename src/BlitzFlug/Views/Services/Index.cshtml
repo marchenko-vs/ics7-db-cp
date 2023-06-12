@@ -3,9 +3,9 @@
     var ticketId = Convert.ToInt64(ViewData["TicketId"]);
 }
 
-@model IEnumerable<BlitzFlug.Models.Service>
+@model List<BlitzFlug.Models.Service>
 
-@if (null != ViewData["EmptyFlightList"])
+@if (0 == Model.Count)
 {
     <div class="text-center" style="margin-top: 150px">
         <h2>@ViewData["EmptyFlightList"]</h2>
@@ -17,6 +17,10 @@ else
         <div class="text-center" style="margin-top: 150px">
             <h2>Дополнительные услуги</h2>
         </div>
+        @if (null != TempData["Warning"])
+        {
+            <h3>@TempData["Warning"]</h3>
+        }
         @foreach (var service in Model)
         {
             <div class="card text-left" style="margin-top: 20px">

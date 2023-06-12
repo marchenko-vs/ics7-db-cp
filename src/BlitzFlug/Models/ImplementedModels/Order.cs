@@ -51,7 +51,7 @@ namespace BlitzFlug.Models
             for (int i = 0; i < 100; i++)
             {
                 timer.Start();
-                this._db.GetOrderByUserId(1);
+                this._db.GetOrderByUserId(700021);
                 timer.Stop();
                 time += timer.ElapsedMilliseconds;
             }
@@ -60,16 +60,7 @@ namespace BlitzFlug.Models
             for (int i = 0; i < 100; i++)
             {
                 timer.Start();
-                this._db.GetOrderByUserId(5000000);
-                timer.Stop();
-                time += timer.ElapsedMilliseconds;
-            }
-            Console.WriteLine($"{time / 100} ms.");
-            time = 0;
-            for (int i = 0; i < 100; i++)
-            {
-                timer.Start();
-                this._db.GetOrderByUserId(10000000);
+                this._db.GetOrderByUserId(1000000);
                 timer.Stop();
                 time += timer.ElapsedMilliseconds;
             }

@@ -1,6 +1,7 @@
 import random as r
 import datetime as d
 
+
 planes = list()  # plane id, economy, first, business
 
 flight_num = 1
@@ -17,7 +18,7 @@ economy_price_max = 7000
 
 points = ['Архангельск', 'Астрахань', 'Барнаул', 'Москва (Домодедово)', 'Санкт-Петербург', 'Рязань', 'Саратов', 'Москва (Шереметьево)']
 
-with open('Planes.csv', 'r', encoding='UTF-16') as f:
+with open('../Data/Planes.csv', 'r', encoding='UTF-16') as f:
 	line = f.readline()
 
 	while line:
@@ -26,10 +27,10 @@ with open('Planes.csv', 'r', encoding='UTF-16') as f:
 		if lst[0] != '':
 			planes.append([lst[0], int(lst[3]), int(lst[4]), int(lst[5])])
 
-f2 = open('Tickets.csv', 'w', encoding='UTF-16')
+f2 = open('../Data/Tickets.csv', 'w', encoding='UTF-16')
 f2.write('Id,FlightId,OrderId,Row,Place,Class,Refund,Price\n')
 
-with open('Flights.csv', 'w', encoding='UTF-16') as f:
+with open('../Data/Flights.csv', 'w', encoding='UTF-16') as f:
 	f.write('Id,PlaneId,DeparturePoint,ArrivalPoint,DepartureDateTime,ArrivalDateTime\n')
 
 	for i in range(flight_num):

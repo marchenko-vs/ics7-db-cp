@@ -65,8 +65,9 @@ namespace BlitzFlug.Repositories
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand($"SELECT * FROM [Tickets] WHERE " +
-                    $"[Tickets].FlightId = @FlightId ORDER BY Row, Place, Id", connection);
+                SqlCommand command = new SqlCommand($"SELECT * FROM Tickets WHERE " +
+                    $"FlightId = @FlightId ORDER BY Row, Place, Id", connection);
+                
                 command.Parameters.AddWithValue("FlightId", flightId);
 
                 var dataReader = command.ExecuteReader();

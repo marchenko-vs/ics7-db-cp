@@ -478,3 +478,7 @@ $RECYCLE.BIN/
 *.bbl
 *.bcf
 *.toc
+
+src/Scripts/Data/Flights.csv
+src/Scripts/Data/Tickets.csv
+src/Scripts/Python/Orders.csv

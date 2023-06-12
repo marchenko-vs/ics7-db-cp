@@ -55,7 +55,7 @@ IF OBJECT_ID('[Tickets]', 'U') IS NULL
 CREATE TABLE [Tickets] (
 	[Id] [bigint] IDENTITY(1, 1) CHECK (Id > 0),
 	[FlightId] [bigint] NOT NULL CHECK (FlightId > 0),
-	[OrderId] [bigint],
+	[OrderId] [bigint] CHECK (OrderId >= 0),
 	[Row] [int] NOT NULL CHECK (Row > 0),
 	[Place] [char] NOT NULL,
 	[Class] [nvarchar](16) NOT NULL,

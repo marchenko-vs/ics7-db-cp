@@ -18,19 +18,18 @@ namespace BlitzFlug.Controllers
         public IActionResult AddService(Int64 ticketId, Int64 serviceId)
         {
             var service = new Service();
-            
+            var ticket = new Ticket { Id = ticketId };
+
             try
             {
                 service.AddService(ticketId, serviceId);
             }
-            catch (Exception ex) 
+            catch (Exception) 
             {
-                ViewData["ServiceError"] = ex.Message;
-
-                return View("Error");
+                TempData["Warning"] = "Услуга уже добавлена";
             }
 
-            return RedirectToAction("Index", "Orders");
+            return RedirectToAction("Index", ticket.GetTicketById());
         }
 
         public IActionResult ActiveServices(Ticket ticket)

@@ -2,49 +2,28 @@
     Layout = "_Layout";
 }
 
-@model List<BlitzFlug.Models.Ticket>
+@model BlitzFlug.Models.Ticket
 
 <div class="container">
-    @if (0 == Model.Count)
-    {
-        <div class="text-center" style="margin-top: 150px">
-            <h2>Билеты не найдены</h2>
+    <div class="text-center" style="margin-top: 150px">
+        <h2>Управление билетами</h2>
+    </div>
+    <form method="get" asp-controller="Tickets">
+        <div class="form-group" style="margin-top: 25px">
+            <input asp-for="Id" class="form-control" min="1" placeholder="ID билета" required>
         </div>
-    }
-    else
-    {
-        <div class="text-center" style="margin-top: 150px">
-            <h2>Управление билетами</h2>
+        <button asp-action="AFindTicket" type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px">Найти</button>
+    </form>
+    <form method="get" asp-controller="Tickets">
+        <div class="form-group" style="margin-top: 25px">
+            <input asp-for="FlightId" class="form-control" min="1" placeholder="ID рейса" required>
         </div>
-        <form method="get" asp-controller="Tickets" asp-action="InsertTicket">
-            <button type="submit" class="btn btn-primary" style="margin-top: 25px">Добавить новый билет</button>
-        </form>
-        @for (var i = 0; i < Model.Count; ++i)
-        {
-            @if (0 == Model[i].OrderId)
-            {
-                <form method="post" asp-controller="Tickets" asp-action="DeleteTicket" asp-route-id="@Model[i].Id">
-                    <div class="card text-left" style="margin-top: 20px">
-                        <div class="card-body">
-                            <h3 class="card-title">ID: @Model[i].Id</h3>
-                            <h3 class="card-title">ID рейса: @Model[i].FlightId</h3>
-                            <h3 class="card-title">Ряд: @Model[i].Row</h3>
-                            <h3 class="card-title">Место: @Model[i].Place</h3>
-                            @if (Model[i].Refund)
-                            {
-                                <h3 class="card-title">Есть возможность возврата</h3>
-                            }
-                            else
-                            {
-                                <h3 class="card-title">Нет возможности возврата</h3>
-                            }
-                            <h3 class="card-title">Класс: @Model[i].Class</h3>
-                            <h3 class="card-title">Стоимость: @Model[i].Price.ToString("F") &#8381;</h3>
-                            <button type="submit" class="btn btn-primary" style="margin-top: 15px">Удалить</button>
-                        </div>
-                    </div>
-                </form>
-            }
-        }
-    }
+        <button asp-action="AFindTicketsByFlight" type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px">Найти по рейсу</button>
+    </form>
+    <form method="get" asp-controller="Tickets">
+        <button asp-action="AFindTickets" type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px">Все билеты</button>
+    </form>
+    <form method="get" asp-controller="Tickets" asp-action="InsertTicket">
+        <button type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px">Добавить билет</button>
+    </form>
 </div>

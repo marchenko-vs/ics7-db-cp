@@ -53,6 +53,29 @@ namespace BlitzFlug.Repositories
             return flights;
         }
 
+        public Flight GetFlightById(Int64 flightId)
+        {
+            List<Flight> flights = new List<Flight>();
+
+            using (SqlConnection connection = new SqlConnection(this._connectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand($"SELECT * FROM Flights WHERE Id = @flightId", connection);
+
+                command.Parameters.AddWithValue("flightId", flightId);
+
+                var dataReader = command.ExecuteReader();
+
+                flights = QueryHandler.GetList<Flight>(dataReader);
+
+                if (0 == flights.Count)
+                    return null;
+            }
+
+            return flights[0];
+        }
+
         public void DeleteFlight(Int64 flightId)
         {
             using (SqlConnection connection = new SqlConnection(this._connectionString))

@@ -2,35 +2,19 @@
     Layout = "_Layout";
 }
 
-@model List<BlitzFlug.Models.User>
+@model BlitzFlug.Models.User
 
 <div class="container">
-    @if (null == Model)
-    {
-        <div class="text-center" style="margin-top: 150px">
-            <h2>Пользователи не найдены</h2>
+    <div class="text-center" style="margin-top: 150px">
+        <h2>Управление пользователями</h2>
+    </div>
+    <form method="get" asp-controller="Users">
+        <div class="form-group" style="margin-top: 25px">
+            <input asp-for="Id" class="form-control" min="1" placeholder="ID пользователя" required>
         </div>
-    }
-    else
-    {
-        <div class="text-center" style="margin-top: 150px">
-            <h2>Существующие пользователи</h2>
-        </div>
-        @for (var i = 0; i < Model.Count; ++i)
-        {
-            <form method="post" asp-controller="Users" asp-action="BlockUser" asp-route-id="@Model[i].Id">
-                <div class="card text-left" style="margin-top: 20px">
-                    <div class="card-body">
-                        <h3 class="card-title">ID: @Model[i].Id</h3>
-                        <h3 class="card-title">Роль: @Model[i].Role</h3>
-                        <h3 class="card-title">Почта: @Model[i].Email</h3>
-                        <h3 class="card-title">Имя: @Model[i].FirstName</h3>
-                        <h3 class="card-title">Фамилия: @Model[i].LastName</h3>
-                        <h3 class="card-title">Дата регистрации: @Model[i].RegDate.ToShortDateString()</h3>
-                        <button type="submit" class="btn btn-primary" style="margin-top: 15px">Заблокировать</button>
-                    </div>
-                </div>
-            </form>
-        }
-    }
+        <button asp-action="FindUser" type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px">Найти</button>
+    </form>
+    <form method="get" asp-controller="Users">
+        <button asp-action="FindUsers" type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px">Все пользователи</button>
+    </form>
 </div>

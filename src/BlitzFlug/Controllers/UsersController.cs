@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BlitzFlug.Controllers
 {
@@ -19,7 +20,10 @@ namespace BlitzFlug.Controllers
         [HttpGet]
         public ActionResult Settings()
         {
-            return View();
+            User user = new User();
+            var singletonUser = SingletonUser.GetInstance();
+
+            return View(user.GetCurrentUser(singletonUser.UserInfo.Email));
         }
 
         public ActionResult Settings(User user)
@@ -35,11 +39,12 @@ namespace BlitzFlug.Controllers
             catch (Exception ex)
             {
                 ViewData["SettingsError"] = ex.Message;
-
-                return View();
+                var singletonUser = SingletonUser.GetInstance();
+                return View(user.GetCurrentUser(singletonUser.UserInfo.Email));
             }
 
-            return RedirectToAction("LogOut", "Users");
+            TempData["Info"] = "Данные изменены. Войдите в личный кабинет";
+            return RedirectToAction("LogOut");
         }
 
         [HttpPost]
@@ -53,7 +58,7 @@ namespace BlitzFlug.Controllers
             }
             catch (Exception) 
             {
-                ViewData["ValidateMessage"] = "Пользователь с такой почтой уже зарегистрирован!";
+                ViewData["ValidateMessage"] = "Данный электронный адрес уже используется";
                 return View();
             }
 
@@ -135,12 +140,26 @@ namespace BlitzFlug.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpGet]
-        public ActionResult HandleUsers()
+        public ActionResult FindUsers()
         {
             var user = new User();
             List<User> users = user.GetAllUsers();
 
             return View(users);
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public ActionResult HandleUsers()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public ActionResult FindUser(User user)
+        {
+            return View(user.GetById());
         }
     }
 }

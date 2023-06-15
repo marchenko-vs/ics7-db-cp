@@ -1,7 +1,6 @@
 ﻿using BlitzFlug.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace BlitzFlug.Controllers
 {
@@ -9,12 +8,9 @@ namespace BlitzFlug.Controllers
     {
         public IActionResult Index(Flight flight)
         {
-            var ticket = new Ticket();
-            List<Ticket> tickets = new List<Ticket>();
-            
-            tickets = ticket.GetAvailableTickets(flight.Id).ToList();
+            var ticket = new Ticket();          
 
-            return View(tickets);
+            return View(ticket.GetAvailableTickets(flight.Id).ToList());
         }
 
         [Authorize]
@@ -46,12 +42,32 @@ namespace BlitzFlug.Controllers
 
         [Authorize(Roles = "moderator, admin")]
         [HttpGet]
-        public IActionResult HandleTickets()
+        public IActionResult AFindTickets()
         {
             var ticket = new Ticket();
-            List<Ticket> tickets = ticket.GetAllTickets().ToList();
 
-            return View(tickets);
+            return View(ticket.GetAllTickets().ToList());
+        }
+
+        [Authorize(Roles = "moderator, admin")]
+        [HttpGet]
+        public IActionResult HandleTickets()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "moderator, admin")]
+        [HttpGet]
+        public IActionResult AFindTicket(Ticket ticket)
+        {
+            return View(ticket.GetTicketById());
+        }
+
+        [Authorize(Roles = "moderator, admin")]
+        [HttpGet]
+        public IActionResult AFindTicketsByFlight(Ticket ticket)
+        {
+            return View(ticket.GetByFlightId());
         }
 
         [Authorize(Roles = "moderator, admin")]
@@ -79,7 +95,6 @@ namespace BlitzFlug.Controllers
             catch (Exception) 
             {
                 ViewData["Error"] = "Указаны некорректные данные";
-
                 return View();
             }
 

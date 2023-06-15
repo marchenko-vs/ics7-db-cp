@@ -2,6 +2,7 @@
     Layout = "_Layout";
     Order order = new Order();
     decimal price = order.GetOrderPrice(Model[0].OrderId);
+    TimeSpan timeSpan = new TimeSpan(2, 0, 0);
 }
 
 @model List<BlitzFlug.Models.OrderedTicket>
@@ -16,7 +17,7 @@
     else
     {
         <div class="text-center" style="margin-top: 150px">
-            <h2>Заказ</h2>
+            <h2>Заказ #@Model[0].OrderId</h2>
         </div>
         <div>
         </div>
@@ -36,12 +37,12 @@
                         <h3 class="card-title">Место: @Model[i].Place</h3>
                         <h3 class="card-title">Класс: @Model[i].Class</h3>
                         <h3 class="card-title">Стоимость: @Model[i].Price.ToString("F") &#8381;</h3>
-                        @if (Model[i].Refund)
+                        @if (Model[i].Refund && 1 == TimeSpan.Compare(Model[i].DepartureDateTime - DateTime.Now, timeSpan))
                         {
-                            <button type="submit" asp-controller="Orders" asp-action="IssueRefund" asp-route-id="@Model[i].Id" class="btn btn-primary" style="margin-top: 15px">Оформить возврат</button>
+                            <button type="submit" asp-controller="Orders" asp-action="IssueRefund" asp-route-id="@Model[i].Id" class="btn btn-primary" style="margin-top: 15px; width: 250px">Оформить возврат</button>
                         }
-                        <button type="submit" asp-controller="Services" asp-action="PurchasedServices" asp-route-id="@Model[i].Id" class="btn btn-primary" style="margin-top: 15px">Посмотреть добавленные услуги</button>
-                        <button type="submit" asp-controller="Planes" asp-action="GetPlaneOrder" asp-route-id="@Model[i].PlaneId" class="btn btn-primary" style="margin-top: 15px">Самолет, выполняющий рейс</button>
+                        <button type="submit" asp-controller="Services" asp-action="PurchasedServices" asp-route-id="@Model[i].Id" class="btn btn-primary" style="margin-top: 15px; width: 250px">Добавленные услуги</button>
+                        <button type="submit" asp-controller="Planes" asp-action="GetPlaneOrder" asp-route-id="@Model[i].PlaneId" class="btn btn-primary" style="margin-top: 15px; width: 250px">Самолет</button>
                     </div>
                 </div>
             </form>

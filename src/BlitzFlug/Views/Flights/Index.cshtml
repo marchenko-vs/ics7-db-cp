@@ -29,5 +29,9 @@
         </select>
         <input name="DepartureDateTime" value="@dateForCalendar" type="date" style="width: 175px; height: 60px" required>
         <button type="submit" class="btn btn-primary" style="margin-bottom: 5px; width: 175px; height: 60px">Найти рейсы</button>
+        @if (null != TempData["Message"])
+        {
+            <h3>@TempData["Message"]</h3>
+        }
     </div>
 </form>

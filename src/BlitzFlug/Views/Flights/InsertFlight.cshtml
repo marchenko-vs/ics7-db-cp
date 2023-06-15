@@ -23,7 +23,7 @@
     <div class="form-group" style="margin-top: 25px">
         <input asp-for="ArrivalDateTime" type="datetime-local" placeholder="Дата и время прибытия" required>
     </div>
-    <button type="submit" class="btn btn-primary" style="margin-top: 25px">Добавить</button>
+    <button type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px">Добавить</button>
     @if (null != ViewData["Error"])
     {
         <h3>@ViewData["Error"]</h3>

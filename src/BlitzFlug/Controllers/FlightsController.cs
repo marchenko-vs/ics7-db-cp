@@ -28,8 +28,23 @@ namespace BlitzFlug.Controllers
         [HttpGet]
         public IActionResult FindFlights(Flight flight)
         {
-            Console.WriteLine(flight.DepartureDateTime);
-            List<Flight> flights = flight.GetFlights().ToList();
+            if (flight.DeparturePoint == flight.ArrivalPoint)
+            {
+                TempData["Message"] = "Укажите разные города";
+                return RedirectToAction("Index");
+            }
+
+            List<Flight> flights = new List<Flight>();
+
+            try
+            { 
+                flights = flight.GetFlights().ToList();
+            }
+            catch (Exception) 
+            {
+                TempData["Message"] = "Укажите корректную дату вылета";
+                return RedirectToAction("Index");
+            }
 
             return View("FoundFlights", flights);
         }
@@ -44,10 +59,23 @@ namespace BlitzFlug.Controllers
         [HttpGet]
         public IActionResult HandleFlights()
         {
-            var flight = new Flight();
-            List<Flight> flights = flight.GetAllFlights().ToList();
+            return View();
+        }
 
-            return View(flights);
+        [Authorize(Roles = "moderator, admin")]
+        [HttpGet]
+        public IActionResult FindFlight(Flight flight)
+        {
+            return View(flight.GetById());
+        }
+
+        [Authorize(Roles = "moderator, admin")]
+        [HttpGet]
+        public IActionResult FindAllFlights()
+        {
+            var flight = new Flight();
+
+            return View(flight.GetAllFlights().ToList());
         }
 
         [Authorize(Roles = "moderator, admin")]
@@ -75,7 +103,6 @@ namespace BlitzFlug.Controllers
             catch (Exception)
             {
                 ViewData["Error"] = "Введены некорректные данные";
-
                 return View();
             }
 

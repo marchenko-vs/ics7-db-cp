@@ -58,6 +58,11 @@ namespace BlitzFlug.Models
             return this._db.GetFlights(this.DeparturePoint, this.ArrivalPoint, this.DepartureDateTime);            
         }
 
+        public Flight GetById()
+        {
+            return this._db.GetFlightById(this.Id);
+        }
+
         public void InsertFlight()
         {
             this._db.InsertFlight(this);

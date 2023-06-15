@@ -67,9 +67,12 @@ namespace BlitzFlug.Models
 
         public IEnumerable<Ticket> GetAllTickets()
         {
-            List<Ticket> tickets = this._db.GetAllTickets().ToList();
+            return this._db.GetAllTickets().ToList();
+        }
 
-            return tickets;
+        public IEnumerable<Ticket> GetByFlightId()
+        {
+            return this._db.GetTicketsByFlightId(this.FlightId);
         }
 
         public void BookTicket()

@@ -5,7 +5,7 @@
 @model BlitzFlug.Models.Ticket
 
 <div class="text-center" style="margin-top: 150px">
-    <h2>Добавить новый рейс</h2>
+    <h2>Добавить новый билет</h2>
 </div>
 <form method="post" asp-controller="Tickets" asp-action="InsertTicket">
     <div class="form-group" style="margin-top: 25px">
@@ -44,7 +44,7 @@
     <div class="form-group" style="margin-top: 25px">
         <input asp-for="Price" class="form-control" type="number" min="0" placeholder="Стоимость" required>
     </div>
-    <button type="submit" class="btn btn-primary" style="margin-top: 25px">Добавить</button>
+    <button type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px; width: 250px">Добавить</button>
     @if (null != ViewData["Error"])
     {
         <h3>@ViewData["Error"]</h3>

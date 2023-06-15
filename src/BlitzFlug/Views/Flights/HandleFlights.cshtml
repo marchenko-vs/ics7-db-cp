@@ -2,37 +2,22 @@
     Layout = "_Layout";
 }
 
-@model List<BlitzFlug.Models.Flight>
+@model BlitzFlug.Models.Flight
 
 <div class="container">
-    @if (0 == Model.Count)
-    {
-        <div class="text-center" style="margin-top: 150px">
-            <h2>Рейсы не найдены</h2>
+    <div class="text-center" style="margin-top: 150px">
+        <h2>Управление рейсами</h2>
+    </div>
+    <form method="get" asp-controller="Flights">
+        <div class="form-group" style="margin-top: 25px">
+            <input asp-for="Id" class="form-control" min="1" placeholder="ID рейса" required>
         </div>
-    }
-    else
-    {
-        <div class="text-center" style="margin-top: 150px">
-            <h2>Управление рейсами</h2>
-        </div>
-        <form method="get" asp-controller="Flights" asp-action="InsertFlight">
-            <button type="submit" class="btn btn-primary" style="margin-top: 25px">Добавить новый рейс</button>
-        </form>
-        @for (var i = 0; i < Model.Count; ++i)
-        {
-            <form method="post" asp-controller="Flights" asp-action="DeleteFlight" asp-route-id="@Model[i].Id">
-                <div class="card text-left" style="margin-top: 20px">
-                    <div class="card-body">
-                        <h3 class="card-title">ID: @Model[i].Id</h3>
-                        <h3 class="card-title">Пункт вылета: @Model[i].DeparturePoint</h3>
-                        <h3 class="card-title">Дата и время вылета: @Model[i].DepartureDateTime.ToShortDateString() @Model[i].DepartureDateTime.ToShortTimeString()</h3>
-                        <h3 class="card-title">Пункт прибытия: @Model[i].ArrivalPoint</h3>
-                        <h3 class="card-title">Дата и время прибытия: @Model[i].ArrivalDateTime.ToShortDateString() @Model[i].ArrivalDateTime.ToShortTimeString()</h3>
-                        <button type="submit" class="btn btn-primary" style="margin-top: 15px">Удалить</button>
-                    </div>
-                </div>
-            </form>
-        }
-    }
+        <button asp-action="FindFlight" type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px">Найти</button>
+    </form>
+    <form method="get" asp-controller="Flights">
+        <button asp-action="FindAllFlights" type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px">Все рейсы</button>
+    </form>
+    <form method="get" asp-controller="Flights" asp-action="InsertFlight">
+        <button type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px">Добавить рейс</button>
+    </form>
 </div>

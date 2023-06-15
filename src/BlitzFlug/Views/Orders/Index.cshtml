@@ -17,11 +17,9 @@
             <h2>Заказ</h2>
         </div>
         <div>
-            <form method="post" asp-controller="Orders" asp-action="Purchase">
-                <button type="submit" class="btn btn-primary" style="width: 200px; margin-top: 25px">Оплатить</button>
-            </form>
-            <form method="post" asp-controller="Orders" asp-action="ClearOrder">
-                <button type="submit" class="btn btn-primary" style="width: 200px; margin-top: 10px">Очистить корзину</button>
+            <form method="post" asp-controller="Orders">
+                <button asp-action="Purchase" type="submit" class="btn btn-primary" style="width: 200px; margin-top: 25px; width: 250px">Оплатить заказ</button>
+                <button asp-action="ClearOrder" type="submit" class="btn btn-primary" style="width: 200px; margin-top: 25px; width: 250px">Удалить заказ</button>
             </form>
         </div>
         <div class="text-center" style="margin-top: 25px">
@@ -48,12 +46,12 @@
                             <h3 class="card-title">Нет возможности возврата</h3>
                         }
                         <h3 class="card-title">Стоимость: @Model[i].Price.ToString("F") &#8381;</h3>
-                        <button type="submit" asp-controller="Orders" asp-action="CancelBooking" asp-route-id="@Model[i].Id" class="btn btn-primary" style="margin-top: 15px">Удалить</button>
+                        <button type="submit" asp-controller="Orders" asp-action="CancelBooking" asp-route-id="@Model[i].Id" class="btn btn-primary" style="margin-top: 15px; width: 250px">Убрать из заказа</button>
                         <form method="get">
-                            <button type="submit" asp-controller="Services" asp-action="Index" asp-route-id="@Model[i].Id" class="btn btn-primary" style="margin-top: 15px">Добавить услугу</button>
+                            <button type="submit" asp-controller="Services" asp-action="Index" asp-route-id="@Model[i].Id" class="btn btn-primary" style="margin-top: 15px; width: 250px">Добавить услугу</button>
                         </form>
-                        <button type="submit" asp-controller="Services" asp-action="ActiveServices" asp-route-id="@Model[i].Id" class="btn btn-primary" style="margin-top: 15px">Посмотреть добавленные услуги</button>
-                        <button type="submit" asp-controller="Planes" asp-action="GetPlaneOrder" asp-route-id="@Model[i].PlaneId" class="btn btn-primary" style="margin-top: 15px">Самолет, выполняющий рейс</button>
+                        <button type="submit" asp-controller="Services" asp-action="ActiveServices" asp-route-id="@Model[i].Id" class="btn btn-primary" style="margin-top: 15px; width: 250px">Добавленные услуги</button>
+                        <button type="submit" asp-controller="Planes" asp-action="GetPlaneOrder" asp-route-id="@Model[i].PlaneId" class="btn btn-primary" style="margin-top: 15px; width: 250px">Самолет</button>
                     </div>
                 </div>
             </form>

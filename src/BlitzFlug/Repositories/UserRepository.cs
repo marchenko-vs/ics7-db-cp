@@ -146,7 +146,6 @@ namespace BlitzFlug.Repositories
                                                     $"FirstName = @FirstName," +
                                                     $"LastName = @LastName WHERE Id = @Id", connection);
 
-                Console.WriteLine(user.Id);
                 command.Parameters.AddWithValue("Id", user.Id);
                 command.Parameters.AddWithValue("Email", user.Email);
                 if (string.IsNullOrEmpty(user.FirstName))

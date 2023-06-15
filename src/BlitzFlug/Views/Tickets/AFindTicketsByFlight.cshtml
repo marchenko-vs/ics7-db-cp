@@ -4,26 +4,27 @@
 
 @model List<BlitzFlug.Models.Ticket>
 
-@if (0 == Model.Count)
-{
-    <div class="text-center" style="margin-top: 150px">
-        <h2>Билеты не найдены</h2>
-    </div>
-}
-else
-{
-    <div class="container">
+<div class="container">
+    @if (0 == Model.Count)
+    {
         <div class="text-center" style="margin-top: 150px">
-            <h2>Доступные билеты</h2>
+            <h2>Билеты не найдены</h2>
+        </div>
+    }
+    else
+    {
+        <div class="text-center" style="margin-top: 150px">
+            <h2>Информация о билетах</h2>
         </div>
         @for (var i = 0; i < Model.Count; ++i)
         {
-            <form method="get" asp-controller="Tickets" asp-action="BookTicket" asp-route-id="@Model[i].Id">
+            <form method="post" asp-controller="Tickets" asp-action="DeleteTicket" asp-route-id="@Model[i].Id">
                 <div class="card text-left" style="margin-top: 20px">
                     <div class="card-body">
+                        <h3 class="card-title">ID: @Model[i].Id</h3>
+                        <h3 class="card-title">ID рейса: @Model[i].FlightId</h3>
                         <h3 class="card-title">Ряд: @Model[i].Row</h3>
                         <h3 class="card-title">Место: @Model[i].Place</h3>
-                        <h3 class="card-title">Класс: @Model[i].Class</h3>
                         @if (Model[i].Refund)
                         {
                             <h3 class="card-title">Есть возможность возврата</h3>
@@ -32,12 +33,15 @@ else
                         {
                             <h3 class="card-title">Нет возможности возврата</h3>
                         }
+                        <h3 class="card-title">Класс: @Model[i].Class</h3>
                         <h3 class="card-title">Стоимость: @Model[i].Price.ToString("F") &#8381;</h3>
-                        <button type="submit" class="btn btn-primary" style="margin-top: 15px">Добавить в заказ</button>
+                        @if (0 == Model[i].OrderId)
+                        {
+                            <button type="submit" class="btn btn-primary" style="margin-top: 15px; width: 250px">Удалить</button>
+                        }
                     </div>
                 </div>
-             </form>
+            </form>
         }
-    </div>
-}
-
+    }
+</div>

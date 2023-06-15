@@ -81,7 +81,7 @@ namespace BlitzFlug.Models
         {
             if (null != this._db.GetUserByEmail(email))
             {
-                throw new ExistingUserException(String.Format("Пользователь {0} уже существует!", email));
+                throw new ExistingUserException(String.Format("Пользователь {0} уже зарегистрирован", email));
             }
 
             this.Email = email;
@@ -94,12 +94,12 @@ namespace BlitzFlug.Models
         {
             if (null == this._db.GetUserByEmail(email))
             {
-                throw new NotExistingUserException(String.Format("Пользователь {0} не найден!", email));
+                throw new NotExistingUserException(String.Format("Пользователь {0} не найден", email));
             }
 
             if (false == this.Verify(email, password))
             {
-                throw new IncorrectPasswordException(String.Format("Неверный пароль!", email));
+                throw new IncorrectPasswordException(String.Format("Введен неверный пароль", email));
             }
         }
 
@@ -116,19 +116,13 @@ namespace BlitzFlug.Models
             if (string.IsNullOrEmpty(this.Email))
                 this.Email = currentUser.Email;
 
-            if (string.IsNullOrEmpty(this.FirstName))
-                this.FirstName = currentUser.FirstName;
-
-            if (string.IsNullOrEmpty(this.LastName))
-                this.LastName = currentUser.LastName;
-
             try
             {
                 this._db.UpdateUser(this);
             }
             catch (Exception)
             {
-                throw new ExistingUserException(String.Format("Почта {0} уже занята!", this.Email));
+                throw new ExistingUserException(String.Format("Почта {0} уже используется", this.Email));
             }
         }
 
@@ -144,18 +138,17 @@ namespace BlitzFlug.Models
 
         public List<User> GetAllUsers()
         {
-            var currentUser = SingletonUser.GetInstance();
-            List<User> users = this._db.GetAllUsers().ToList();
-
-            var itemToRemove = users.Single(r => r.Id == currentUser.UserInfo.Id);
-            users.Remove(itemToRemove);
-
-            return users;
+            return this._db.GetAllUsers().ToList();
         }
 
         public void DeleteUser()
         {
             this._db.DeleteUser(this.Id);
+        }
+
+        public User GetById()
+        {
+            return this._db.GetUserById(this.Id);
         }
     }
 }

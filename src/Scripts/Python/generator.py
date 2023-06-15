@@ -59,7 +59,7 @@ with open('../Data/Flights.csv', 'w', encoding='UTF-16') as f:
 		class_name = 'первый'
 
 		for j in range(first_class_num):
-			f2.write(f'{ticket_id},{i + 1},0,{row},{place},{class_name},{1},{r.randint(first_price_min, first_price_max)}\n')
+			f2.write(f'{ticket_id},{i + 1},0,{row},{place},{class_name},{r.randint(0, 1)},{r.randint(first_price_min, first_price_max)}\n')
 			ticket_id += 1
 			place_ind += 1
 			if place_ind == len(places):
@@ -73,7 +73,7 @@ with open('../Data/Flights.csv', 'w', encoding='UTF-16') as f:
 		class_name = 'бизнес'
 
 		for j in range(business_class_num):
-			f2.write(f'{ticket_id},{i + 1},0,{row},{place},{class_name},{1},{r.randint(business_price_min, business_price_max)}\n')
+			f2.write(f'{ticket_id},{i + 1},0,{row},{place},{class_name},{r.randint(0, 1)},{r.randint(business_price_min, business_price_max)}\n')
 			ticket_id += 1
 			place_ind += 1
 			if place_ind == len(places):
@@ -87,7 +87,7 @@ with open('../Data/Flights.csv', 'w', encoding='UTF-16') as f:
 		class_name = 'эконом'
 
 		for j in range(economy_class_num):
-			f2.write(f'{ticket_id},{i + 1},0,{row},{place},{class_name},{1},{r.randint(economy_price_min, economy_price_max)}\n')
+			f2.write(f'{ticket_id},{i + 1},0,{row},{place},{class_name},{r.randint(0, 1)},{r.randint(economy_price_min, economy_price_max)}\n')
 			ticket_id += 1
 			place_ind += 1
 			if place_ind == len(places):

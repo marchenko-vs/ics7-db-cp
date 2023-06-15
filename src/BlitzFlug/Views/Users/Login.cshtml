@@ -20,4 +20,8 @@
     {
         <h3>@ViewData["ValidateMessage"]</h3>
     }
+    @if (TempData["Info"] != null)
+    {
+        <h3>@TempData["Info"]</h3>
+    }
 </form>

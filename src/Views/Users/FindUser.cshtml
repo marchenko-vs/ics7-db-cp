@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "_Layout";
+    var currentId = SingletonUser.GetInstance().UserInfo.Id;
+}
+
+@model BlitzFlug.Models.User
+
+@if (null == Model)
+{
+    <div class="text-center" style="margin-top: 150px">
+        <h2>Пользователь не найден</h2>
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="text-center" style="margin-top: 150px">
+            <h2>Информация о пользователе</h2>
+        </div>
+        <form method="post" asp-controller="Users" asp-action="BlockUser">
+            <div class="card text-left" style="margin-top: 20px">
+                <div class="card-body">
+                    @Html.HiddenFor(m => m.Id)
+                    <h3 class="card-title">ID: @Model.Id</h3>
+                    <h3 class="card-title">Роль: @Model.Role</h3>
+                    <h3 class="card-title">Почта: @Model.Email</h3>
+                    <h3 class="card-title">Имя: @Model.FirstName</h3>
+                    <h3 class="card-title">Фамилия: @Model.LastName</h3>
+                    <h3 class="card-title">Дата регистрации: @Model.RegDate.ToShortDateString()</h3>
+                    @if (currentId != Model.Id)
+                    {
+                        <button type="submit" class="btn btn-primary" style="margin-top: 15px; width: 250px; width: 250px">Заблокировать</button>
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+}

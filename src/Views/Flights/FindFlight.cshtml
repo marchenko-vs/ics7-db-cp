@@ -1,0 +1,33 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model BlitzFlug.Models.Flight
+
+<div class="container">
+    @if (null == Model)
+    {
+        <div class="text-center" style="margin-top: 150px">
+            <h2>Рейс не найден</h2>
+        </div>
+    }
+    else
+    {
+        <div class="text-center" style="margin-top: 150px">
+            <h2>Информация о рейсе</h2>
+        </div>
+        <form method="post" asp-controller="Flights" asp-action="DeleteFlight">
+            <div class="card text-left" style="margin-top: 20px">
+                <div class="card-body">
+                    @Html.HiddenFor(m => m.Id)
+                    <h3 class="card-title">ID: @Model.Id</h3>
+                    <h3 class="card-title">Пункт вылета: @Model.DeparturePoint</h3>
+                    <h3 class="card-title">Дата и время вылета: @Model.DepartureDateTime.ToShortDateString() @Model.DepartureDateTime.ToShortTimeString()</h3>
+                    <h3 class="card-title">Пункт прибытия: @Model.ArrivalPoint</h3>
+                    <h3 class="card-title">Дата и время прибытия: @Model.ArrivalDateTime.ToShortDateString() @Model.ArrivalDateTime.ToShortTimeString()</h3>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 15px; width: 250px">Удалить</button>
+                </div>
+            </div>
+        </form>
+    }
+</div>

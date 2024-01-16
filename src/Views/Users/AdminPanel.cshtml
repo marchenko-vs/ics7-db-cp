@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "_Layout";
+    var isAdmin = Context.User.IsInRole("admin");
+}
+
+@model BlitzFlug.Models.User
+
+<div class="text-center" style="margin-top: 150px">
+    <h2>Панель администратора</h2>
+</div>
+<form method="get" asp-controller="Flights" asp-action="HandleFlights">
+    <button type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px">Управление рейсами</button>
+</form>
+<form method="get" asp-controller="Tickets" asp-action="HandleTickets">
+    <button type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px">Управление билетами</button>
+</form>
+@if (isAdmin)
+{
+    <form method="get" asp-controller="Users" asp-action="HandleUsers">
+        <button type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px">Управление пользователями</button>
+    </form>
+}

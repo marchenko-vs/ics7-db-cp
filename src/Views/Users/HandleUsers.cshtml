@@ -1,0 +1,20 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model BlitzFlug.Models.User
+
+<div class="container">
+    <div class="text-center" style="margin-top: 150px">
+        <h2>Управление пользователями</h2>
+    </div>
+    <form method="get" asp-controller="Users">
+        <div class="form-group" style="margin-top: 25px">
+            <input asp-for="Id" class="form-control" min="1" placeholder="ID пользователя" required>
+        </div>
+        <button asp-action="FindUser" type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px">Найти</button>
+    </form>
+    <form method="get" asp-controller="Users">
+        <button asp-action="FindUsers" type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px">Все пользователи</button>
+    </form>
+</div>

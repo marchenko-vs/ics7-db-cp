@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model BlitzFlug.Models.User
+
+<div class="text-center" style="margin-top: 150px">
+    <h2>Войдите в личный кабинет</h2>
+</div>
+
+<form method="post" asp-controller="Users" asp-action="Login">
+    <div class="form-group" style="margin-top: 25px">
+        <input asp-for="Email" type="email" class="form-control" placeholder="Адрес электронной почты" required>
+    </div>
+    <div class="form-group" style="margin-top: 25px">
+        <input asp-for="Password" type="password" minlength="6" class="form-control" placeholder="Пароль" required>
+    </div>
+    <button type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px">Войти</button>
+    @if (ViewData["ValidateMessage"] != null)
+    {
+        <h3>@ViewData["ValidateMessage"]</h3>
+    }
+    @if (TempData["Info"] != null)
+    {
+        <h3>@TempData["Info"]</h3>
+    }
+</form>

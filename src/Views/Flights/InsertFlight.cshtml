@@ -1,0 +1,31 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model BlitzFlug.Models.Flight
+
+<div class="text-center" style="margin-top: 150px">
+    <h2>Добавить новый рейс</h2>
+</div>
+<form method="post" asp-controller="Flights" asp-action="InsertFlight">
+    <div class="form-group" style="margin-top: 25px">
+        <input asp-for="PlaneId" class="form-control" min="1" placeholder="ID самолета" required>
+    </div>
+    <div class="form-group" style="margin-top: 25px">
+        <input asp-for="DeparturePoint" class="form-control" placeholder="Пункт отправления" required>
+    </div>
+    <div class="form-group" style="margin-top: 25px">
+        <input asp-for="DepartureDateTime" type="datetime-local" placeholder="Дата и время отправления" required>
+    </div>
+    <div class="form-group" style="margin-top: 25px">
+        <input asp-for="ArrivalPoint" class="form-control" placeholder="Пункт прибытия" required>
+    </div>
+    <div class="form-group" style="margin-top: 25px">
+        <input asp-for="ArrivalDateTime" type="datetime-local" placeholder="Дата и время прибытия" required>
+    </div>
+    <button type="submit" class="btn btn-primary" style="margin-top: 25px; width: 250px">Добавить</button>
+    @if (null != ViewData["Error"])
+    {
+        <h3>@ViewData["Error"]</h3>
+    }
+</form>

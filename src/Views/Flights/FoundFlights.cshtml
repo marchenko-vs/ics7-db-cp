@@ -1,0 +1,37 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model List<BlitzFlug.Models.Flight>
+
+<div class="container">
+    @if (0 == Model.Count)
+    {
+        <div class="text-center" style="margin-top: 150px">
+            <h2>Рейсы не найдены</h2>
+        </div>
+    }
+    else
+    {
+        <div class="text-center" style="margin-top: 150px">
+            <h2>Найденные рейсы</h2>
+        </div>
+        @for (var i = 0; i < Model.Count; ++i)
+        {
+            <form method="get" asp-controller="Tickets" asp-action="Index" asp-route-id="@Model[i].Id">
+                <div class="card text-left" style="margin-top: 20px">
+                    <div class="card-body">
+                        <h3 class="card-title">Пункт вылета: @Model[i].DeparturePoint</h3>
+                        <h3 class="card-title">Дата вылета: @Model[i].DepartureDateTime.ToShortDateString()</h3>
+                        <h3 class="card-title">Время вылета: @Model[i].DepartureDateTime.ToShortTimeString()</h3>
+                        <h3 class="card-title">Пункт прибытия: @Model[i].ArrivalPoint</h3>
+                        <h3 class="card-title">Дата прибытия: @Model[i].ArrivalDateTime.ToShortDateString()</h3>
+                        <h3 class="card-title">Время прибытия: @Model[i].ArrivalDateTime.ToShortTimeString()</h3>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 15px; width: 250px">Билеты</button>
+                        <button type="submit" asp-controller="Planes" asp-action="GetPlane" asp-route-id="@Model[i].PlaneId" class="btn btn-primary" style="margin-top: 15px; width: 250px">Самолет</button>
+                    </div>
+                </div>
+            </form>
+        }
+    }
+</div>
